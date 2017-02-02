@@ -6,9 +6,11 @@ Created on Thu Oct 27 16:15:39 2016
 """
 
 import os
+import shutil
 import glob
 import numpy as np
 import pandas as pd
+import warnings
 from functools import partial
 
 GECKO_DT_FMT = '%d%m%Y_%H%M%S'
@@ -77,7 +79,10 @@ def gecko_fnames_to_table(filenames):
         dir_name, bb = os.path.split(x)
         base_name, ext = os.path.splitext(bb)
         
-        parts = base_name.lower().split('_')
+        base_name = base_name.lower()
+        base_name = base_name.replace('set_', 'set')
+        
+        parts = base_name.split('_')
         
         if parts[-1] in ['skeletons', 'intensities', 'features', 'trajectories']:
             postfix = '_' + parts[-1]
@@ -107,6 +112,7 @@ def gecko_fnames_to_table(filenames):
         stage_pos, parts = _part_n('pos', parts)
         set_n, parts = _part_n('set', parts)
         
+        
         prefix = '_'.join(parts)
         
         return dir_name, base_name, ext, prefix, channel, stage_pos, set_n, video_timestamp, postfix
@@ -121,9 +127,12 @@ def get_movie_dirs(movies_dir_D, exp_name):
     for ii in range(3):
         n_pc = str(ii+1)
         dd = os.path.join(movies_dir_D, 'PC' + n_pc, exp_name + '_' + n_pc)
-        movie_dirs.append(dd)
-    
-    assert all(os.path.exists(x) for x in movie_dirs)
+        
+        if os.path.exists(dd):
+            movie_dirs.append(dd)
+        else:
+            msg = '{} does not exists. It will be ignored.'.format(dd)
+            warnings.warn(msg)
     return movie_dirs
     
 def read_extra_data(output_root_d, original_root_d):
@@ -171,17 +180,23 @@ def read_extra_data(output_root_d, original_root_d):
         assert len(unique_triples) == len(db)
         
     return rig_move_times, db, db_ind
-    
-#%%
-def get_new_names(movie_dir, pc_n, db, db_ind, rig_move_times, output_dir, f_ext=None):
-    #%%
-    
+
+def _get_valid_input_files(movie_dir, f_ext=None):
     if f_ext is None:
         fnames1 = glob.glob(os.path.join(movie_dir, '**', '*.mjpg'), recursive=True)
         fnames2 = glob.glob(os.path.join(movie_dir, '**', '*hdf5'), recursive=True)
         fnames = fnames1 + fnames2
     else:
-        fnames2 = glob.glob(os.path.join(movie_dir, '**', f_ext), recursive=True)
+        fnames = glob.glob(os.path.join(movie_dir, '**', f_ext), recursive=True)
+    
+    return fnames
+
+
+
+
+def get_new_names(movie_dir, pc_n, db, db_ind, rig_move_times, output_dir, f_ext=None):
+    
+    fnames = _get_valid_input_files(movie_dir, f_ext)
     
     fparts_table = gecko_fnames_to_table(fnames)
     #correct the channel using the pc number
@@ -191,19 +206,21 @@ def get_new_names(movie_dir, pc_n, db, db_ind, rig_move_times, output_dir, f_ext
     if rig_move_times.size > 0:
         fparts_table['stage_pos'] = fparts_table['video_timestamp'].apply(partial(get_rig_pos, rig_move_times=rig_move_times))
     else:
-        
         for ii, row in fparts_table.iterrows():
+            
             good = (db['Camera_N'] == row['channel']) & (db['Set_N'] == row['set_n'])
             ind = np.where(good)[0]
-            assert ind.size==1
             
-            fparts_table.loc[ii, 'stage_pos'] = db.loc[ind[0], 'Rig_Pos']
-            
+            if ind.size==1:
+                fparts_table.loc[ii, 'stage_pos'] = db.loc[ind[0], 'Rig_Pos']
+            #else: print('Cannot find a match for the file {} in the database.'.format(row['base_name']))
+                
     #%%
     dir_files_to_rename = []
     for old_fname, (irow, row) in zip(fnames, fparts_table.iterrows()):
         try:
             #match movie using set_n, pos_n, ch_n
+            print((row['set_n'], row['stage_pos'], row['channel']))
             db_row = db.loc[db_ind[(row['set_n'], row['stage_pos'], row['channel'])]]
         except KeyError:
             #not match in the csv database
@@ -226,7 +243,14 @@ def get_new_names(movie_dir, pc_n, db, db_ind, rig_move_times, output_dir, f_ext
     return dir_files_to_rename
 #%% 
 def get_new_names_pc(original_root, exp_name, output_root):
-        
+    
+    #get de directories for a particular experiment
+    movie_dirs = get_movie_dirs(original_root, exp_name)    
+    if len(movie_dirs)==0:
+        print('No valid directories with the format {}\**\{} were found. Nothing to do here.'.format(original_root, exp_name))
+        return
+    
+    
     #get data from the extra files
     rig_move_times, db, db_ind = read_extra_data(output_root, original_root)
     
@@ -234,10 +258,6 @@ def get_new_names_pc(original_root, exp_name, output_root):
     output_dir = os.path.join(output_root, 'RawVideos',  exp_name)
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
-    
-    #get de directories for a particular experiment
-    movie_dirs = get_movie_dirs(original_root, exp_name)    
-    
     
     enc_in = os.path.join(movie_dirs[0], 'wormencoder.ini')
     if os.path.exists(enc_in):
@@ -256,7 +276,11 @@ def get_new_names_pc(original_root, exp_name, output_root):
     files_to_rename = sum(files_to_rename, [])
     files_to_rename = [(x, y.replace('.hdf5', '.raw_hdf5')) for x,y in files_to_rename]
     
-
+    print_files_to_rename(files_to_rename)
+    #check that the number of unique new names is the same as 
+    #the original number of files (otherwise we will overwrite something we don't want) 
+    src, dst = map(set, zip(*files_to_rename))
+    assert len(src) == len(dst) 
 
     return files_to_rename
             
@@ -339,24 +363,51 @@ def print_files_to_rename(files_to_rename):
         dnameo, fname_old = os.path.split(old_name)
         pc_n = [x for x in dnameo.split(os.sep) if x.startswith('PC')][0]
         print('%s => %s' % (os.path.join(pc_n, fname_old), new_name))
+
+def remove_remaining_dirs(raw_movies_root, exp_name):
+    def _get_all_files(raw_movies_root, exp_name):
+        existing_files = []
+        for movie_dir in get_movie_dirs(raw_movies_root, exp_name):
+            for root, dirs, files in os.walk(movie_dir):
+                for file in files:
+                    existing_files.append(os.path.join(root, file))
+        return existing_files
     
+    
+    valid_files = sum(map(_get_valid_input_files, get_movie_dirs(raw_movies_root, exp_name)), [])
+    
+    if len(valid_files) > 0:
+        for x in valid_files:
+            print(x)
+        print('The files above still valid movies in the directories {}/**/{}.'.format(raw_movies_root, exp_name))
+    else:
+        existing_files = _get_all_files(raw_movies_root, exp_name)
+        if len(existing_files) > 0:
+            for x in existing_files:
+                print(x)
+            reply = input('The files above are still in the directory (y/N)?')
+            reply = reply.lower()
+            delete_dir =  reply in ['yes', 'ye', 'y']
+        else:
+            delete_dir = True
+        
+        if delete_dir:
+            for movie_dir in get_movie_dirs(raw_movies_root, exp_name):
+                shutil.rmtree(movie_dir)
+
 if __name__ == '__main__':
-    #f_ext = '*hdf5'
-    f_ext = '*.mjpg'
-    exp_name = 'double_pick_151216'
-    
     raw_movies_root = "/Volumes/behavgenom_archive$/RigRawVideos"
     output_root = "/Volumes/behavgenom_archive$/Avelino/Worm_Rig_Tests/short_movies/"
+    exp_name = 'double_pick_200117'
     
     files_to_rename = get_new_names_pc(raw_movies_root, 
                                        exp_name, 
                                        output_root)
     
     if not files_to_rename:
-        print('No files found. Exiting.')
+        print('No files to renamed found. Nothing to do here.')
     else:
-        print_files_to_rename(files_to_rename)
-        reply = input('The previous files are going to be renamed. Do you wish to continue (y/N)?')
+        reply = input('The files above are going to be renamed. Do you wish to continue (y/N)?')
         reply = reply.lower()
         if reply in ['yes', 'ye', 'y']:
             print('Renaming files...')
@@ -371,9 +422,21 @@ if __name__ == '__main__':
             print('Done.')
         else:
             print('Aborted.')
-        
-    #%%
-    #f_ext = '*.hdf5'
-    #dd = rename_after_bad_choice(output_root, exp_name, f_ext, new_prefix_fun)
-    #wrong_naming = [[y for y in map(os.path.basename, x)] for x in dd if x[0]!=x[1]]
     
+    remove_remaining_dirs(raw_movies_root, exp_name)
+            
+    
+
+#%%
+#save_renamed = os.path.join(output_root, 'ExtraFiles', exp_name + '_renamed.tsv')
+#with open(save_renamed, 'r') as fid:
+#    data = fid.read().split('\n')
+
+
+#%%
+
+
+
+            
+
+
