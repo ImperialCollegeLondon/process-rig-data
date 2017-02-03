@@ -56,7 +56,7 @@ class ReadFeaturesHDF5(object):
     
     def get_means(self, features_file, group_str = 'feat_means'):
         with pd.HDFStore(features_file, 'r') as fid:
-            features_means = fid['/' + group_str]
+            features_means = fid['/features_summary/' + group_str]
         return features_means
 
 def save_into_db(database_name, experiments):
@@ -82,7 +82,7 @@ def save_into_db(database_name, experiments):
                 continue
         
         
-        feat_types = ['features_P10th', 'features_P90th', 'features_medians', 'features_means']
+        feat_types = ['P10th', 'P90th', 'medians', 'means']
         feat_types = feat_types + [x + '_split' for x in feat_types]
         for feat_str in feat_types:
             plate_mean_features = feat_reader.get_means(feat_file, feat_str)
@@ -127,7 +127,7 @@ if __name__ == '__main__':
     database_dir = '/Users/ajaver/OneDrive - Imperial College London/compare_strains_DB'
     root_dir = '/Volumes/behavgenom_archive$/Avelino/Worm_Rig_Tests/'
     
-    exp_set =   'short_movies' #'Agar_Test' #'Test_20161027' # 'L4_Long_Rec' #'Test_Food'#
+    exp_set =   'short_movies_new' #'Agar_Test' #'Test_20161027' # 'L4_Long_Rec' #'Test_Food'#
     exp_set_dir = os.path.join(root_dir, exp_set)
     
     database_name = os.path.join(database_dir, 'control_experiments_{}.db'.format(exp_set))

@@ -16,7 +16,7 @@ pd.read_csv('/Volumes/behavgenom_archive$/Avelino/calibration_071216/Calibration
 
 #%%
 
-<<<<<<< Updated upstream:work_in_progress/process_rig_data/result_plots/plot_db.py
+
 def _delta_timestamp(video_timestamp):
     delT = video_timestamp - video_timestamp.min()
     delT /= np.timedelta64(1, 'm')
@@ -61,7 +61,7 @@ def _get_n_worms_estimate(experiments, feats):
     experiments['tot_frames'] = tot_frames
     return experiments
     
-=======
+
 def _get_delta_start(experiments):
     def _get_deltaT(video_timestamp):
         deltaT = video_timestamp - video_timestamp.min()
@@ -105,7 +105,7 @@ def _get_observed_n_worms(feats, experiments):
     experiments = experiments.join(observed_n_worms)
     return experiments
 #%%
->>>>>>> Stashed changes:work_in_progress/process_rig_data/plot_db.py
+
 def _add_sample_id(experiments):
     
     col_keys = ['exp_name', 'set_n', 'stage_pos', 'channel']
@@ -148,13 +148,8 @@ def _read_feats(con, tab_name = 'features_means_split'):
     if 'video_timestamp' in experiments:
         experiments['video_timestamp'] = pd.to_datetime(experiments['video_timestamp'])
         experiments['date'] = experiments['video_timestamp'].dt.date
-<<<<<<< Updated upstream:work_in_progress/process_rig_data/result_plots/plot_db.py
         experiments = _get_set_delta_t(experiments)
-        
-=======
-        experiments = _get_delta_start(experiments)
->>>>>>> Stashed changes:work_in_progress/process_rig_data/plot_db.py
-    
+     
     
     feats = pd.read_sql_query('SELECT * FROM %s' % tab_name, con)
     #experiments = _get_observed_n_worms(feats, experiments)
