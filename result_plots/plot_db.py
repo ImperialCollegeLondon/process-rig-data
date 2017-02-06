@@ -12,11 +12,6 @@ import matplotlib.pylab as plt
 from sqlalchemy import create_engine
 import numpy as np
 
-pd.read_csv('/Volumes/behavgenom_archive$/Avelino/calibration_071216/Calibration_071216.csv')
-
-#%%
-
-
 def _delta_timestamp(video_timestamp):
     delT = video_timestamp - video_timestamp.min()
     delT /= np.timedelta64(1, 'm')
@@ -127,7 +122,7 @@ def _add_sample_id(experiments):
     return experiments 
 
     
-def _filter_feats(con, feats, filt_path_range = 10, filt_frac_good = 0.75, tab_name = 'features_means'):
+def _filter_feats(con, feats, filt_path_range = 10, filt_frac_good = 0.75, tab_name = 'means'):
     #
     feats_ind = pd.read_sql_query('SELECT worm_index, n_frames, n_valid_skel, path_range, video_id FROM %s' % tab_name, con)
     feats_ind['frac_good'] = feats_ind['n_valid_skel']/feats_ind['n_frames']
@@ -141,7 +136,7 @@ def _filter_feats(con, feats, filt_path_range = 10, filt_frac_good = 0.75, tab_n
     
     return good_rows
                  
-def _read_feats(con, tab_name = 'features_means_split'):
+def _read_feats(con, tab_name = 'split'):
     experiments = pd.read_sql_query('SELECT * FROM experiments', con)
     _add_sample_id(experiments)
     
@@ -165,7 +160,7 @@ def _read_feats(con, tab_name = 'features_means_split'):
     return feats, experiments
                  
 def get_feats_db(database_name, filt_path_range = 10, filt_frac_good = 0.75, 
-                 tab_name = 'features_means_split'):
+                 tab_name = 'means_split'):
     con = create_engine('sqlite:///' + database_name)
     
     feats, experiments = _read_feats(con, tab_name)

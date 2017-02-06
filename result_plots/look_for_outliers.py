@@ -58,14 +58,15 @@ def plot_roi(feats, inds, n_rows = 5):
 
 if __name__ == '__main__':
     database_dir = '/Users/ajaver/OneDrive - Imperial College London/compare_strains_DB'
-    tab_name = 'features_medians'
+    tab_name = 'medians'
     filt_path_range = 0
     filt_frac_good = 0
     
-    database_name = 'control_experiments_Agar_Test.db'
+    #database_name = 'control_experiments_Agar_Test.db'
     #database_name = 'control_experiments_Test_20161027.db'
+    database_name = 'control_experiments_short_movies_new.db'
     
-    feats = get_feats_db(os.path.join(database_dir, database_name), 
+    feats, experiments = get_feats_db(os.path.join(database_dir, database_name), 
                          filt_path_range, 
                          filt_frac_good,
                          tab_name)

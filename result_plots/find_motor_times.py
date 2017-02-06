@@ -157,8 +157,6 @@ if __name__ == '__main__':
                 g.set(xlim=(-5, 625))
             break
         
-        
-        
         #%%
         import patsy
         import statsmodels.api as sm
