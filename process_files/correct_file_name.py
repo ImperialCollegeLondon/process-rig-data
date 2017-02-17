@@ -259,7 +259,7 @@ def new_prefix_fun(db_row):
             base_name += '_V'
         base_name
     else:
-        base_name = '{}_N{}_F1-{}'.format(db_row['Strain'], db_row['N_Worms'], db_row['Food_Conc'])
+        base_name = '{}_worms{}_food1-{}'.format(db_row['Strain'], db_row['N_Worms'], db_row['Food_Conc'])
     
     return base_name
         
@@ -408,8 +408,8 @@ def rename_after_bad_choice(output_root, exp_name, f_ext):
 
 if __name__ == '__main__':
     raw_movies_root = "/Volumes/behavgenom_archive$/RigRawVideos"
-    output_root = "/Volumes/behavgenom_archive$/Avelino/Worm_Rig_Tests/short_movies_new/"
-    exp_name = 'double_pick_200117'
+    output_root = "/Volumes/behavgenom_archive$/Avelino/Worm_Rig_Tests/movies_2h/"
+    exp_name = 'Double_pick_160217'
     
     rename_raw_videos(raw_movies_root, exp_name, output_root)
     #rename_after_bad_choice(output_root, exp_name, f_ext)

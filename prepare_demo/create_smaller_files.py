@@ -11,9 +11,14 @@ import subprocess as sp
 from MWTracker.helper.misc import FFMPEG_CMD
 
 
-main_dir = '/Volumes/behavgenom_archive$/Avelino/Worm_Rig_Tests/short_movies_new/RawVideos'
-video_files = glob.glob(os.path.join(main_dir, '**', '*.mjpg'))
-short_files = [x.replace('short_movies_new', 'demo') for x in video_files]
+#main_dir = '/Volumes/behavgenom_archive$/Avelino/Worm_Rig_Tests/short_movies_new/RawVideos'
+main_dir = '/Volumes/behavgenom_archive$/Adam/tests/RawVideos/Liquid_Imaging_070217'
+video_files = glob.glob(os.path.join(main_dir, '*.mjpg'))
+
+
+output_dir = '/Users/ajaver/OneDrive - Imperial College London/Tests/different_animals/swimming'
+short_files = [os.path.join(output_dir, os.path.basename(x)) for x in video_files]
+
 for f_old, f_new in zip(video_files, short_files):
     dname = os.path.dirname(f_new)
     if not os.path.exists(dname):
