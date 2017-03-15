@@ -5,8 +5,8 @@ setwd(this.dir)
 source("load_db.R")
 source("model.R")
 
-#db_path = '/Users/ajaver/OneDrive - Imperial College London/compare_strains_DB/control_experiments_short_movies_new.db'
-db_path = '/Users/ajaver/OneDrive - Imperial College London/compare_strains_DB/control_experiments_movies_2h.db'
+db_path = '/Users/ajaver/OneDrive - Imperial College London/compare_strains_DB/control_experiments_short_movies_new.db'
+#db_path = '/Users/ajaver/OneDrive - Imperial College London/compare_strains_DB/control_experiments_movies_2h.db'
 experiments = read.experiments(db_path)
 
 control.strain = 'N2'
