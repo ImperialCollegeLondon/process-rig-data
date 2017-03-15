@@ -241,18 +241,22 @@ if __name__ == '__main__':
     import os
     
     database_dir = '/Users/ajaver/OneDrive - Imperial College London/compare_strains_DB'
-    tab_name = 'features_medians'
+    tab_name = 'medians_split'
     filt_path_range = 0
     filt_frac_good = 0
         
-    database_name = 'control_experiments_Test_20161027.db'
+    database_name = 'control_experiments_short_movies_new.db'
+    #database_name = 'control_experiments_movies_2h.db'
+    #database_name = 'control_experiments_Test_20161027.db'
     db_path = os.path.join(database_dir, database_name)
     
     
     db_obj = plot_db(db_path, filt_path_range, filt_frac_good, tab_name)
     #%%
-    db_obj.plot(['length',  'Strain', 'N_Worms', 'Picker'])
-    db_obj.plot(['midbody_width',  'Strain', 'N_Worms', 'Picker'])
-    #%%
-    db_obj.plot(['midbody_speed_pos',  'Strain', 'N_Worms', 'Picker'])
+    for feat in ['length', 'midbody_width', 'midbody_speed_pos']:
+        db_obj.plot([feat,  'Strain', 'N_Worms', 'exp_name'])
+    
+    #db_obj.plot(['length',  'Strain', 'N_Worms', 'Picker'])
+    #db_obj.plot(['midbody_width',  'Strain', 'N_Worms', 'Picker'])
+    #db_obj.plot(['midbody_speed_pos',  'Strain', 'N_Worms', 'Picker'])
     

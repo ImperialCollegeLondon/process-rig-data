@@ -15,17 +15,33 @@ from functools import partial
 
 GECKO_DT_FMT = '%d%m%Y_%H%M%S'
 
+PIX2FOCUS = 10
 def rig_focus_to_microns_per_pixel(focus):
     ''' convert rig focus to micros per pixel'''
-    return 10 #new calibration #-0.1937*(focus)+13.4377
+    return PIX2FOCUS #new calibration #-0.1937*(focus)+13.4377
 
 def read_rig_csv_db(csv_file):
-    db = pd.read_csv(csv_file)
-    db.columns = [x.strip() for x in db.columns]
+    if csv_file.endswith('.csv'):
+        db = pd.read_csv(csv_file)
+        db.columns = [x.strip() for x in db.columns]
+        if db.columns.size == 1:
+            db = pd.read_table(csv_file)
+    else:
+        db = pd.read_excel(csv_file)
+    
     
     db.dropna(inplace=True, how='all')
     
-    db['microns_per_pixel']= db['Focus'].apply(rig_focus_to_microns_per_pixel)
+    
+    
+    assert all(x in db for x in ['Set_N', 'Rig_Pos', 'Camera_N'])
+    
+    
+    if 'Focus' in db:
+        db['microns_per_pixel']= db['Focus'].apply(rig_focus_to_microns_per_pixel)
+    else:
+        db['microns_per_pixel'] = PIX2FOCUS
+    
     
     db[['Set_N', 'Rig_Pos', 'Camera_N']] = db[['Set_N', 'Rig_Pos', 'Camera_N']].astype(np.int)
     
@@ -36,8 +52,6 @@ def read_rig_csv_db(csv_file):
         return db, db_ind
     else:
         raise ValueError('There must be only one combination Set_N, Rig_Pos, Camera_N per sample in the .csv file')
-    
-    
 
 def read_rig_log_file(log_files):
     
@@ -138,13 +152,13 @@ def get_movie_dirs(movies_dir_D, exp_name):
             warnings.warn(msg)
     return movie_dirs
     
-def read_extra_data(output_root_d, original_root_d):
-    def _move_if_needed(fname, old_location):
+def read_extra_data(output_root_d, original_root_d, csv_db_dir):
+    def _copy_if_needed(fname, old_location):
         if not os.path.exists(fname):
             fname_original = os.path.join(old_location, os.path.basename(fname))
             if not os.path.exists(fname_original):
                 raise FileNotFoundError(fname_original)
-            os.rename(fname_original, fname)
+            os.copy(fname_original, fname)
     
             
             
@@ -153,10 +167,13 @@ def read_extra_data(output_root_d, original_root_d):
     if not os.path.exists(extra_dir):
         os.makedirs(extra_dir)
     
-    
-    csv_file = os.path.join(extra_dir, exp_name + '.csv')
-    _move_if_needed(csv_file, original_root_d)
-        
+    try:
+        csv_file = os.path.join(csv_db_dir, exp_name + '.csv')
+        _copy_if_needed(csv_file, original_root_d)
+    except FileNotFoundError:
+        csv_file = os.path.join(csv_db_dir, exp_name + '.xlsx')
+        _copy_if_needed(csv_file, original_root_d)
+            
     
     log_files = glob.glob(os.path.join(extra_dir, exp_name + '*.log'))
     if len(log_files) == 0:
@@ -253,13 +270,14 @@ def get_new_names(fnames, pc_n, db, db_ind, rig_move_times, output_dir='', f_ext
 
     
 def new_prefix_fun(db_row):
+    base_name = '{}_worms{}'.format(db_row['Strain'], db_row['N_Worms'])
+    
     if 'Vortex' in db_row:
-        base_name = '{}_N{}'.format(db_row['Strain'], db_row['N_Worms'])
         if db_row['Vortex'] == 1:
             base_name += '_V'
         base_name
-    else:
-        base_name = '{}_worms{}_food1-{}'.format(db_row['Strain'], db_row['N_Worms'], db_row['Food_Conc'])
+    elif 'Food_Conc' in db_row:
+        base_name += '_food1-{}'.format(db_row['Food_Conc'])
     
     return base_name
         
@@ -310,7 +328,7 @@ def remove_remaining_dirs(raw_movies_root, exp_name):
 
 
 #%% 
-def get_new_names_pc(original_root, exp_name, output_root):
+def get_new_names_pc(original_root, exp_name, output_root, csv_db_dir):
     
     #get de directories for a particular experiment
     movie_dirs = get_movie_dirs(original_root, exp_name)    
@@ -332,7 +350,7 @@ def get_new_names_pc(original_root, exp_name, output_root):
     
     
     #get data from the extra files
-    rig_move_times, db, db_ind = read_extra_data(output_root, original_root)
+    rig_move_times, db, db_ind = read_extra_data(output_root, original_root, csv_db_dir)
     
     
     #explore each directory and get the expected new name
@@ -347,10 +365,11 @@ def get_new_names_pc(original_root, exp_name, output_root):
     files_to_rename = sum(files_to_rename, [])
     files_to_rename = [(x, y.replace('.hdf5', '.raw_hdf5')) for x,y in files_to_rename]
     
-    #check that the number of unique new names is the same as 
-    #the original number of files (otherwise we will overwrite something we don't want) 
-    src, dst = map(set, zip(*files_to_rename))
-    assert len(src) == len(dst) 
+    if len(files_to_rename) > 0:
+        #check that the number of unique new names is the same as 
+        #the original number of files (otherwise we will overwrite something we don't want) 
+        src, dst = map(set, zip(*files_to_rename))
+        assert len(src) == len(dst) 
 
     return files_to_rename
 
@@ -376,10 +395,11 @@ def rename_files(files_to_rename, save_renamed_files):
             print('Aborted.')
 
 
-def rename_raw_videos(raw_movies_root, exp_name, output_root):
+def rename_raw_videos(raw_movies_root, exp_name, output_root, csv_db_dir):
     files_to_rename = get_new_names_pc(raw_movies_root, 
                                        exp_name, 
-                                       output_root)
+                                       output_root,
+                                       csv_db_dir)
     save_renamed_files = os.path.join(output_root, 'ExtraFiles', exp_name + '_renamed.tsv')
     
     rename_files(files_to_rename, save_renamed_files)
@@ -397,7 +417,7 @@ def rename_after_bad_choice(output_root, exp_name, f_ext):
             fnames += glob.glob(os.path.join(dname, '**', '*.hdf5'), recursive=True)
     
     #get data from the extra files
-    rig_move_times, db, db_ind = read_extra_data(output_root, '')
+    rig_move_times, db, db_ind = read_extra_data(output_root, '', '')
     
     #explore each directory and get the expected new name
     files_to_rename = get_new_names(fnames, 0, db, db_ind, rig_move_times, output_dir='', f_ext=None)
@@ -408,10 +428,11 @@ def rename_after_bad_choice(output_root, exp_name, f_ext):
 
 if __name__ == '__main__':
     raw_movies_root = "/Volumes/behavgenom_archive$/RigRawVideos"
-    output_root = "/Volumes/behavgenom_archive$/Avelino/Worm_Rig_Tests/movies_2h/"
-    exp_name = 'Double_pick_160217'
+    csv_db_dir = "/Volumes/behavgenom_archive$/ScreeningExcelPrintout"
+    output_root = "/Volumes/behavgenom_archive$/Avelino/Worm_Rig_Tests/swimming/"
+    exp_name = 'Liquid_Imaging_160217'
     
-    rename_raw_videos(raw_movies_root, exp_name, output_root)
+    rename_raw_videos(raw_movies_root, exp_name, output_root, csv_db_dir)
     #rename_after_bad_choice(output_root, exp_name, f_ext)
 
 

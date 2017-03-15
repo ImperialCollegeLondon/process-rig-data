@@ -8,7 +8,7 @@ Created on Thu Dec  8 15:37:43 2016
 
 import os
 
-from plot_db import plot_db
+from plot_db import vid_n_worms_estimate
 import numpy as np
 import seaborn as sns
 import pandas as pd
