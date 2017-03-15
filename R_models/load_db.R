@@ -19,18 +19,18 @@ read.experiments <- function(db_path) {
   return(experiments)
 }
 
-read.feats <- function(db_path, feat_names, feat_table, control.strain=NULL){
+read.feats <- function(db_path, feat.names, feat.table, control.strain=NULL){
   my_db <- src_sqlite(db_path)
   
-  exp_fields = c("e.video_id AS video_id", 
+  exp.fields = c("e.video_id AS video_id", 
                  "exp_name", "prefix", "set_n", 
                  "channel", "stage_pos", "video_timestamp", 
                  "N_Worms", "Picker", "Strain", 
                  "set_delta_time", "exp_delta_time",
                  "worm_index", "n_frames", "n_valid_skel", "first_frame")
-  sql_cmd = paste0("SELECT ", paste(exp_fields, collapse = ',') , 
-                   "," , paste(feat_names, collapse = ','),
-                   " FROM experiments AS e JOIN ", feat_table, " AS tab ON tab.video_id = e.video_id")
+  sql_cmd = paste0("SELECT ", paste(exp.fields, collapse = ',') , 
+                   "," , paste(feat.names, collapse = ','),
+                   " FROM experiments AS e JOIN ", feat.table, " AS tab ON tab.video_id = e.video_id")
   feat_means = as.data.table(tbl(my_db, sql(sql_cmd)))
   
   feat_means <- within(feat_means, {

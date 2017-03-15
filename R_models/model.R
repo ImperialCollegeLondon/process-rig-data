@@ -7,8 +7,9 @@ add.transform <- function(feat.name){
 
 get.model.feat <- function(feat.name, comp.data, valid.frac.thresh = 0.1){
   RANDOM_EFFECTS = '(1+is_control | exp_name/channel)'
-  valid.frac = 1 - sum(is.na(comp.data[[feat.name]]))/dim(comp.data)[1]
-  
+  valid = is.finite(comp.data[[feat.name]])
+  valid.comp.data = comp.data[valid,]
+  valid.frac = sum(valid)/dim(comp.data)[1]
   if(valid.frac > valid.frac.thresh)
   {
     fit.full <- lmer(paste0(add.transform(feat.name), ' ~ is_control + ', RANDOM_EFFECTS), 
