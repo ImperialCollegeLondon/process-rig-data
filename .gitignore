@@ -6,3 +6,7 @@
 *.pdf
 
 *.pyc
+
+R_models/.RData
+
+R_models/.Rhistory
