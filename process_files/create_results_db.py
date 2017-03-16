@@ -126,7 +126,7 @@ def get_rig_experiments_df(features_files, csv_files):
     Get experiments data from the files located in the main directory and from
     the experiments database
     '''
-    #%%
+    
     def _read_db(x):
         db, _ = read_rig_csv_db(x)
         db.columns = [x.strip() for x in db.columns]
@@ -149,7 +149,7 @@ def get_rig_experiments_df(features_files, csv_files):
 if __name__ == '__main__':
     database_dir = '/Users/ajaver/OneDrive - Imperial College London/compare_strains_DB'
     root_dir = '/Volumes/behavgenom_archive$/Avelino/Worm_Rig_Tests/'
-    exp_set = 'movies_2h'#'short_movies_new' #'Agar_Test' #'Test_20161027' # 'L4_Long_Rec' #'Test_Food'#
+    exp_set = 'short_movies_new' #'movies_2h'#'Agar_Test' #'Test_20161027' # 'L4_Long_Rec' #'Test_Food'#
     exp_set_dir = os.path.join(root_dir, exp_set)
     
     database_name = os.path.join(database_dir, 'control_experiments_{}.db'.format(exp_set))

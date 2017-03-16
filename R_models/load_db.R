@@ -1,5 +1,6 @@
 library(dplyr)
 library(lubridate)
+library(data.table)
 
 read.experiments <- function(db_path) { 
   my_db <- src_sqlite(db_path)
@@ -50,7 +51,7 @@ read.feats <- function(db_path, feat.names, feat.table, control.strain=NULL){
   })
   
   #make strain a key to allow us to search
-  setkeyv(features.data, "Strain")
+  setkeyv(feat_means, "Strain")
   
   return (feat_means)
 }
