@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<Experiment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="gasevent" Description="">
+  <WormRigEvents>
+    <WormRigEvent xsi:type="GasEvent">
+      <Nitrogen Name="N" Description="Nitrogen" Percentage="91" />
+      <Oxygen Name="O₂" Description="Oxygen" Percentage="0" />
+      <CarbonDioxide Name="CO₂" Description="Carbon Dioxide" Percentage="0" />
+    </WormRigEvent>
+    <WormRigEvent xsi:type="GasEvent">
+      <Nitrogen Name="N" Description="Nitrogen" Percentage="91" />
+      <Oxygen Name="O₂" Description="Oxygen" Percentage="1" />
+      <CarbonDioxide Name="CO₂" Description="Carbon Dioxide" Percentage="0" />
+    </WormRigEvent>
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Park</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate1</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="2" />
+  </WormRigEvents>
+</Experiment>

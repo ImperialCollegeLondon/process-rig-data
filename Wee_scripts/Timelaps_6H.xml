@@ -1,0 +1,965 @@
+<?xml version="1.0"?>
+        <Experiment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Timelaps" Description="">
+          <WormRigEvents>
+            <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate7</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate6</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate5</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate4</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate3</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate2</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate1</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="180" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate7</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate6</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate5</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate4</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate3</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate2</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate1</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="180" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate7</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate6</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate5</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate4</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate3</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate2</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate1</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="180" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate7</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate6</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate5</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate4</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate3</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate2</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate1</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="180" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate7</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate6</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate5</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate4</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate3</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate2</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate1</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="180" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate7</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate6</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate5</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate4</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate3</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate2</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate1</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="180" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate7</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate6</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate5</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate4</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate3</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate2</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate1</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="180" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate7</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate6</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate5</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate4</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate3</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate2</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate1</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="180" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate7</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate6</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate5</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate4</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate3</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate2</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate1</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="180" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate7</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate6</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate5</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate4</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate3</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate2</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate1</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="180" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate7</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate6</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate5</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate4</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate3</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate2</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate1</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="180" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate7</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate6</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate5</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate4</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate3</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate2</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate1</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="180" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate7</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate6</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate5</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate4</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate3</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate2</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate1</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="180" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate7</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate6</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate5</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate4</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate3</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate2</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate1</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="180" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate7</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate6</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate5</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate4</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate3</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate2</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate1</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="180" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate7</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate6</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate5</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate4</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate3</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate2</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate1</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="180" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate7</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate6</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate5</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate4</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate3</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate2</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate1</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="180" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate7</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate6</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate5</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate4</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate3</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate2</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate1</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="180" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate7</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate6</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate5</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate4</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate3</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate2</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate1</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="180" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate7</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate6</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate5</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate4</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate3</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate2</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate1</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="180" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate7</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate6</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate5</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate4</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate3</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate2</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate1</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="180" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate7</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate6</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate5</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate4</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate3</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate2</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate1</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="180" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate7</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate6</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate5</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate4</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate3</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate2</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate1</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="180" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate7</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate6</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate5</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate4</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate3</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate2</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="VisionEvent" Operation="Start" />
+    <WormRigEvent xsi:type="WaitEvent" Duration="30" />
+    <WormRigEvent xsi:type="VisionEvent" Operation="Stop" />
+    <WormRigEvent xsi:type="MovePositionEvent">
+      <RigPosition>Plate1</RigPosition>
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="180" />
+  </WormRigEvents>
+</Experiment>

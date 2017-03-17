@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+        <Experiment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="GAS_RAMP" Description="">
+          <WormRigEvents>
+            <WormRigEvent xsi:type="GasEvent">
+      <Nitrogen Name="N" Description="Nitrogen" Percentage="91" />
+      <Oxygen Name="O₂" Description="Oxygen" Percentage="24" />
+      <CarbonDioxide Name="CO₂" Description="Carbon Dioxide" Percentage="0" />
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="3" />
+    <WormRigEvent xsi:type="GasEvent">
+      <Nitrogen Name="N" Description="Nitrogen" Percentage="91" />
+      <Oxygen Name="O₂" Description="Oxygen" Percentage="10" />
+      <CarbonDioxide Name="CO₂" Description="Carbon Dioxide" Percentage="0" />
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="3" />
+    <WormRigEvent xsi:type="GasEvent">
+      <Nitrogen Name="N" Description="Nitrogen" Percentage="91" />
+      <Oxygen Name="O₂" Description="Oxygen" Percentage="35" />
+      <CarbonDioxide Name="CO₂" Description="Carbon Dioxide" Percentage="0" />
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="3" />
+    <WormRigEvent xsi:type="GasEvent">
+      <Nitrogen Name="N" Description="Nitrogen" Percentage="91" />
+      <Oxygen Name="O₂" Description="Oxygen" Percentage="10" />
+      <CarbonDioxide Name="CO₂" Description="Carbon Dioxide" Percentage="0" />
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="3" />
+    <WormRigEvent xsi:type="GasEvent">
+      <Nitrogen Name="N" Description="Nitrogen" Percentage="91" />
+      <Oxygen Name="O₂" Description="Oxygen" Percentage="35" />
+      <CarbonDioxide Name="CO₂" Description="Carbon Dioxide" Percentage="0" />
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="3" />
+    <WormRigEvent xsi:type="GasEvent">
+      <Nitrogen Name="N" Description="Nitrogen" Percentage="91" />
+      <Oxygen Name="O₂" Description="Oxygen" Percentage="24" />
+      <CarbonDioxide Name="CO₂" Description="Carbon Dioxide" Percentage="0" />
+    </WormRigEvent>
+    <WormRigEvent xsi:type="WaitEvent" Duration="3" />
+    <WormRigEvent xsi:type="GasEvent">
+      <Nitrogen Name="N" Description="Nitrogen" Percentage="0" />
+      <Oxygen Name="O₂" Description="Oxygen" Percentage="0" />
+      <CarbonDioxide Name="CO₂" Description="Carbon Dioxide" Percentage="0" />
+    </WormRigEvent>
+  </WormRigEvents>
+</Experiment>
