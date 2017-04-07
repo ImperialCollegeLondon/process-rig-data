@@ -277,7 +277,10 @@ def new_prefix_fun(db_row):
             base_name += '_V'
         base_name
     elif 'Food_Conc' in db_row:
-        base_name += '_food1-{}'.format(db_row['Food_Conc'])
+        if db_row['Food_Conc'] > 0:
+            base_name += '_food1-{}'.format(db_row['Food_Conc'])
+        else:
+            base_name += '_nofood'
     
     return base_name
         
@@ -429,15 +432,22 @@ def rename_after_bad_choice(output_root, exp_name, f_ext):
 if __name__ == '__main__':
     raw_movies_root = "/Volumes/behavgenom_archive$/RigRawVideos"
     csv_db_dir = "/Volumes/behavgenom_archive$/ScreeningExcelPrintout"
-    output_root = "/Volumes/behavgenom_archive$/Avelino/Worm_Rig_Tests/swimming/"
-    exp_name = 'Liquid_Imaging_160217'
+    #output_root = "/Volumes/behavgenom_archive$/Adam/screening/SYN/"
+    output_root = "/Volumes/behavgenom_archive$/Avelino/screening/David_Miller/"
+    exp_name = 'DM_unc-4_Adult_L4_060417'
     
     rename_raw_videos(raw_movies_root, exp_name, output_root, csv_db_dir)
     #rename_after_bad_choice(output_root, exp_name, f_ext)
 
 
+  
 
 
-            
+
+
+
+
+
+
 
 
