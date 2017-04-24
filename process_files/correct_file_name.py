@@ -186,7 +186,7 @@ def read_extra_data(output_root_d, original_root_d, csv_db_dir):
     
     #move to the new location if needed
     
-    [_move_if_needed(log_file, original_root_d) for log_file in log_files]
+    [_copy_if_needed(log_file, original_root_d) for log_file in log_files]
     
     
     #read aux files
@@ -432,22 +432,10 @@ def rename_after_bad_choice(output_root, exp_name, f_ext):
 if __name__ == '__main__':
     raw_movies_root = "/Volumes/behavgenom_archive$/RigRawVideos"
     csv_db_dir = "/Volumes/behavgenom_archive$/ScreeningExcelPrintout"
-    #output_root = "/Volumes/behavgenom_archive$/Adam/screening/SYN/"
-    output_root = "/Volumes/behavgenom_archive$/Avelino/screening/David_Miller/"
-    exp_name = 'DM_unc-4_Adult_L4_060417'
+    #output_root = "/Volumes/behavgenom_archive$/Adam/screening/antipsychotics/"
+    #output_root = "/Volumes/behavgenom_archive$/Avelino/screening/David_Miller/"
+    output_root = "/Volumes/behavgenom_archive$/Avelino/Worm_Rig_Tests/short_movies_new/"
+    exp_name = 'Double_pick_160317'
     
     rename_raw_videos(raw_movies_root, exp_name, output_root, csv_db_dir)
     #rename_after_bad_choice(output_root, exp_name, f_ext)
-
-
-  
-
-
-
-
-
-
-
-
-
-
