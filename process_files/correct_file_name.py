@@ -152,41 +152,40 @@ def get_movie_dirs(movies_dir_D, exp_name):
             warnings.warn(msg)
     return movie_dirs
     
-def read_extra_data(output_root_d, original_root_d, csv_db_dir):
+def read_extra_data(output_root_d, csv_db_dir):
     def _copy_if_needed(fname, old_location):
         if not os.path.exists(fname):
             fname_original = os.path.join(old_location, os.path.basename(fname))
             if not os.path.exists(fname_original):
                 raise FileNotFoundError(fname_original)
-            os.copy(fname_original, fname)
+            shutil.copy(fname_original, fname)
     
-            
-            
     #get aux files location
     extra_dir = os.path.join(output_root_d, 'ExtraFiles')
     if not os.path.exists(extra_dir):
         os.makedirs(extra_dir)
     
     try:
-        csv_file = os.path.join(csv_db_dir, exp_name + '.csv')
-        _copy_if_needed(csv_file, original_root_d)
+        csv_file = os.path.join(extra_dir, exp_name + '.csv')
+        _copy_if_needed(csv_file, csv_db_dir)
     except FileNotFoundError:
-        csv_file = os.path.join(csv_db_dir, exp_name + '.xlsx')
-        _copy_if_needed(csv_file, original_root_d)
+        csv_file = os.path.join(extra_dir, exp_name + '.xlsx')
+        _copy_if_needed(csv_file, csv_db_dir)
+        
             
     
     log_files = glob.glob(os.path.join(extra_dir, exp_name + '*.log'))
     if len(log_files) == 0:
-        ori_log_files = glob.glob(os.path.join(original_root_d, exp_name + '*.log'))
+        ori_log_files = glob.glob(os.path.join(extra_dir, exp_name + '*.log'))
         for ori_log_f in ori_log_files:
-            new_file = ori_log_f.replace(original_root_d, extra_dir)
+            new_file = ori_log_f.replace(extra_dir, extra_dir)
             os.rename(ori_log_f, new_file)
             log_files.append(new_file)
     
     
     #move to the new location if needed
     
-    [_copy_if_needed(log_file, original_root_d) for log_file in log_files]
+    [_copy_if_needed(log_file, extra_dir) for log_file in log_files]
     
     
     #read aux files
@@ -332,6 +331,8 @@ def remove_remaining_dirs(raw_movies_root, exp_name):
 
 #%% 
 def get_new_names_pc(original_root, exp_name, output_root, csv_db_dir):
+    #get data from the extra files and copy them int othe ExtraFiles directory if necessary
+    rig_move_times, db, db_ind = read_extra_data(output_root, csv_db_dir)
     
     #get de directories for a particular experiment
     movie_dirs = get_movie_dirs(original_root, exp_name)    
@@ -350,11 +351,6 @@ def get_new_names_pc(original_root, exp_name, output_root, csv_db_dir):
     if os.path.exists(enc_in):
         enc_out = os.path.join(output_dir, 'wormencoder.ini')
         os.rename(enc_in, enc_out)
-    
-    
-    #get data from the extra files
-    rig_move_times, db, db_ind = read_extra_data(output_root, original_root, csv_db_dir)
-    
     
     #explore each directory and get the expected new name
     get_new_d = partial(get_new_names,
@@ -434,8 +430,8 @@ if __name__ == '__main__':
     csv_db_dir = "/Volumes/behavgenom_archive$/ScreeningExcelPrintout"
     #output_root = "/Volumes/behavgenom_archive$/Adam/screening/antipsychotics/"
     #output_root = "/Volumes/behavgenom_archive$/Avelino/screening/David_Miller/"
-    output_root = "/Volumes/behavgenom_archive$/Avelino/Worm_Rig_Tests/short_movies_new/"
-    exp_name = 'Double_pick_160317'
+    output_root = "/Volumes/behavgenom_archive$/Avelino/screening/CeNDR/"
+    exp_name = 'CeNDR_Exp_250417'
     
     rename_raw_videos(raw_movies_root, exp_name, output_root, csv_db_dir)
     #rename_after_bad_choice(output_root, exp_name, f_ext)
