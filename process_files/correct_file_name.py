@@ -213,7 +213,7 @@ def _get_valid_input_files(movie_dir, f_ext=None):
 
 
 
-def get_new_names(fnames, pc_n, db, db_ind, rig_move_times, output_dir='', f_ext=None):
+def get_new_names(fnames, pc_n, db, db_ind, rig_move_times, output_dir='', f_ext=None, base_field='Strain'):
     fparts_table = gecko_fnames_to_table(fnames)
     #correct the channel using the pc number
     fparts_table['channel']  += pc_n*2
@@ -242,7 +242,7 @@ def get_new_names(fnames, pc_n, db, db_ind, rig_move_times, output_dir='', f_ext
             print('FILE NOT LOCATED IN THE DATABASE: ' +  old_fname)
             continue
             
-        new_prefix = new_prefix_fun(db_row)
+        new_prefix = new_prefix_fun(db_row, base_field)
 
         new_base = '{}_Set{}_Pos{}_Ch{}_{}{}{}'.format(new_prefix,
                                                int(row['set_n']), 
@@ -268,18 +268,22 @@ def get_new_names(fnames, pc_n, db, db_ind, rig_move_times, output_dir='', f_ext
 
 
     
-def new_prefix_fun(db_row):
+def new_prefix_fun(db_row, base_field='Strain'):
     base_name = '{}_worms{}'.format(db_row['Strain'], db_row['N_Worms'])
-    
     if 'Vortex' in db_row:
         if db_row['Vortex'] == 1:
             base_name += '_V'
         base_name
+    
+    
+    if 'Compound' in db_row:
+        base_name += '_{}_{:.2f}'.format(db_row['Compound'],db_row['Concentration']).rstrip('0').rstrip('.')
     elif 'Food_Conc' in db_row:
         if db_row['Food_Conc'] > 0:
             base_name += '_food1-{}'.format(db_row['Food_Conc'])
         else:
             base_name += '_nofood'
+    
     
     return base_name
         
@@ -330,7 +334,7 @@ def remove_remaining_dirs(raw_movies_root, exp_name):
 
 
 #%% 
-def get_new_names_pc(original_root, exp_name, output_root, csv_db_dir):
+def get_new_names_pc(original_root, exp_name, output_root, csv_db_dir, base_field='Strain'):
     #get data from the extra files and copy them int othe ExtraFiles directory if necessary
     rig_move_times, db, db_ind = read_extra_data(output_root, csv_db_dir)
     
@@ -357,7 +361,8 @@ def get_new_names_pc(original_root, exp_name, output_root, csv_db_dir):
                         db = db, 
                         db_ind = db_ind, 
                         rig_move_times = rig_move_times, 
-                        output_dir = output_dir)
+                        output_dir = output_dir,
+                        base_field=base_field)
     
     files_to_rename = [get_new_d(_get_valid_input_files(movie_dir), pc_n) for pc_n, movie_dir in enumerate(movie_dirs)]
     #flatten list
@@ -394,17 +399,18 @@ def rename_files(files_to_rename, save_renamed_files):
             print('Aborted.')
 
 
-def rename_raw_videos(raw_movies_root, exp_name, output_root, csv_db_dir):
+def rename_raw_videos(raw_movies_root, exp_name, output_root, csv_db_dir, base_field='Strain'):
     files_to_rename = get_new_names_pc(raw_movies_root, 
                                        exp_name, 
                                        output_root,
-                                       csv_db_dir)
+                                       csv_db_dir,
+                                       base_field=base_field)
     save_renamed_files = os.path.join(output_root, 'ExtraFiles', exp_name + '_renamed.tsv')
     
     rename_files(files_to_rename, save_renamed_files)
     remove_remaining_dirs(raw_movies_root, exp_name)
 
-def rename_after_bad_choice(output_root, exp_name, f_ext):
+def rename_after_bad_choice(output_root, exp_name, base_field='Strain'):
     fnames = []
     raw_dir = os.path.join(output_root, 'RawVideos',  exp_name)
     if os.path.exists(raw_dir): 
@@ -414,12 +420,21 @@ def rename_after_bad_choice(output_root, exp_name, f_ext):
         dname = os.path.join(output_root, dtype,  exp_name)
         if os.path.exists(raw_dir): 
             fnames += glob.glob(os.path.join(dname, '**', '*.hdf5'), recursive=True)
+            fnames += glob.glob(os.path.join(dname, '**', '*.avi'), recursive=True)
+            fnames += glob.glob(os.path.join(dname, '**', '*.wcon*'), recursive=True)
     
     #get data from the extra files
-    rig_move_times, db, db_ind = read_extra_data(output_root, '', '')
+    rig_move_times, db, db_ind = read_extra_data(output_root, '')
     
     #explore each directory and get the expected new name
-    files_to_rename = get_new_names(fnames, 0, db, db_ind, rig_move_times, output_dir='', f_ext=None)
+    files_to_rename = get_new_names(fnames, 
+                                    0, 
+                                    db, 
+                                    db_ind, 
+                                    rig_move_times, 
+                                    output_dir='', 
+                                    f_ext=None,
+                                    base_field=base_field)
     files_to_rename = [(x,y) for x,y in files_to_rename if x!=y]
     
     save_renamed_files = os.path.join(output_root, 'ExtraFiles', exp_name + '_corrected.tsv')
@@ -428,10 +443,14 @@ def rename_after_bad_choice(output_root, exp_name, f_ext):
 if __name__ == '__main__':
     raw_movies_root = "/Volumes/behavgenom_archive$/RigRawVideos"
     csv_db_dir = "/Volumes/behavgenom_archive$/ScreeningExcelPrintout"
+    base_field = 'Strain'
     #output_root = "/Volumes/behavgenom_archive$/Adam/screening/antipsychotics/"
     #output_root = "/Volumes/behavgenom_archive$/Avelino/screening/David_Miller/"
-    output_root = "/Volumes/behavgenom_archive$/Avelino/screening/CeNDR/"
-    exp_name = 'CeNDR_Exp_250417'
+    #output_root = "/Volumes/behavgenom_archive$/Avelino/screening/CeNDR/"
+    #exp_name = 'CeNDR_Set2_280417'
     
-    rename_raw_videos(raw_movies_root, exp_name, output_root, csv_db_dir)
-    #rename_after_bad_choice(output_root, exp_name, f_ext)
+    output_root = '/Volumes/behavgenom_archive$/Adam/screening/antipsychotics'
+    exp_name = 'Antipsychotics_Agar_Screening_120417'
+    
+    #rename_raw_videos(raw_movies_root, exp_name, output_root, csv_db_dir)
+    rename_after_bad_choice(output_root, exp_name, base_field)

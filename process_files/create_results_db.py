@@ -89,7 +89,10 @@ def save_into_db(database_name, experiments):
         feat_types = feat_types + [x + '_split' for x in feat_types]
         for feat_str in feat_types:
             plate_mean_features = feat_reader.get_means(feat_file, feat_str)
+            
             plate_mean_features = convertUnits(plate_mean_features, plate_row['microns_per_pixel'])
+            
+            
             plate_mean_features['video_id'] = video_id
     
             exists_type = 'replace' if video_id == 0 else 'append'

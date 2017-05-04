@@ -23,19 +23,7 @@ mpl.rcParams['image.cmap'] = 'gray'
 from matplotlib.backends.backend_pdf import PdfPages
 from create_results_db import get_rig_experiments_df
 
-def plot_img_ch(exp_row, frame_number=0):
-    mask_dir = exp_row['directory']
-    results_dir = mask_dir.replace('MaskedVideos', 'Results')
-    mask_file = os.path.join(mask_dir, exp_row['base_name'] + exp_row['ext'])
-    skeletons_file = os.path.join(results_dir, exp_row['base_name'] + '_skeletons.hdf5')
-    
-    with tables.File(mask_file, 'r') as fid:
-        img = fid.get_node('/full_data')[0]
-    
-    with pd.HDFStore(skeletons_file, 'r') as fid:
-        trajectories_data = fid['/trajectories_data']
-    
-    
+def get_n_worms_estimate(trajectories_data):
     trajectories_data = trajectories_data[trajectories_data['is_good_skel'] == 1]
     
     
@@ -45,6 +33,25 @@ def plot_img_ch(exp_row, frame_number=0):
         n_worms_estimate = np.percentile(n_per_frame, 99)
     else:
         n_worms_estimate = 0
+    return n_worms_estimate
+
+
+def plot_img_ch(exp_row, frame_number=0):
+    mask_dir = exp_row['directory']
+    results_dir = mask_dir.replace('MaskedVideos', 'Results')
+    mask_file = os.path.join(mask_dir, exp_row['base_name'] + exp_row['ext'])
+    skeletons_file = os.path.join(results_dir, exp_row['base_name'] + '_skeletons.hdf5')
+    
+    with tables.File(mask_file, 'r') as fid:
+        img = fid.get_node('/full_data')[0]
+        tot_frames =  fid.get_node('/mask').shape[0]
+    
+    with pd.HDFStore(skeletons_file, 'r') as fid:
+        trajectories_data = fid['/trajectories_data']
+    
+    
+    trajectories_data = trajectories_data[trajectories_data['is_good_skel'] == 1]
+    n_worms_estimate = get_n_worms_estimate(trajectories_data)
     
     ch2sp = {1:1, 2:4, 3:2, 4:5, 5:3, 6:6}
     coord = trajectories_data[trajectories_data['frame_number']==frame_number]    
@@ -60,6 +67,9 @@ def plot_img_ch(exp_row, frame_number=0):
     
     ax.text(0, 100, 'Ch%i' % ch_n, color='black', fontsize=8,
             bbox={'facecolor':'yellow', 'alpha':0.5, 'pad':1})
+    ax.text(512, 100, 'Frames: {}'.format(tot_frames), 
+            color='black', fontsize=8,
+            bbox={'facecolor':'yellow', 'alpha':0.5, 'pad':1})
     
     ax.text(0, 2000, exp_row['N_Worms'], color='white', fontsize=10,
             bbox={'facecolor':'green', 'alpha':0.5, 'pad':1})
@@ -71,6 +81,8 @@ def plot_img_ch(exp_row, frame_number=0):
     if exp_row['Mark'] == 1:
         ax.text(1850, 100, 'XX', color='black', fontsize=8,
             bbox={'facecolor':'blue', 'alpha':1, 'pad':1})
+    
+    
     
     return n_worms_estimate
 
@@ -100,7 +112,11 @@ def check_one_ch_per_set(exp_data):
                 
     return good
 
-def make_plate_views(root_dir, exp_name, max_del_t):
+def make_plate_views(root_dir, exp_name, max_del_t = 2):
+    '''
+    max_del_t -> max delta time in minutes consider movies as the same temporal set.
+    '''
+
     csv_file = _get_csv_fname(os.path.join(root_dir, 'ExtraFiles', exp_name))
     search_str = os.path.join(root_dir, 'MaskedVideos', exp_name, '*.hdf5')
     mask_files = glob.glob(search_str)
@@ -151,8 +167,10 @@ def make_plate_views(root_dir, exp_name, max_del_t):
     figs2save = [obj.fig] + figs2save
     
     
-    
-    save_name = os.path.join(root_dir, exp_name + '_plate_view.pdf')
+    pdf_dir = os.path.join(root_dir, 'Plate_Views')
+    if not os.path.exists(pdf_dir):
+        os.makedirs(pdf_dir)
+    save_name =  os.path.join(pdf_dir, exp_name + '_plate_view.pdf')
     pdf_pages = PdfPages(save_name)
     
     for fig in figs2save:
@@ -165,11 +183,11 @@ if __name__ == '__main__':
     #root_dir = '/Volumes/behavgenom_archive$/Avelino/PeterAskjaer/'
     #exp_name = 'Mutant_worm_screening_Y32H12A.7(ok3452)_220217'
     #root_dir = '/Volumes/behavgenom_archive$/Avelino/Worm_Rig_Tests/movies_2h/'
-    root_dir = '/Volumes/behavgenom_archive$/Avelino/Worm_Rig_Tests/short_movies_new/'
-    max_del_t = 5
-    
+    #root_dir = '/Volumes/behavgenom_archive$/Avelino/Worm_Rig_Tests/short_movies_new/'
+    #root_dir = '/Volumes/behavgenom_archive$/Avelino/screening/CeNDR/'
+    root_dir = '/Volumes/behavgenom_archive$/Adam/screening/antipsychotics'
     dname = os.path.join(root_dir, 'MaskedVideos')
     exp_names = [x for x in os.listdir(dname) if os.path.isdir(os.path.join(dname,x))]
     for exp_name in exp_names:
-        make_plate_views(root_dir, exp_name, max_del_t)
+        make_plate_views(root_dir, exp_name, max_del_t=2)
     
