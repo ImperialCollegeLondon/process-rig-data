@@ -9,6 +9,7 @@ import os
 import glob
 import pandas as pd
 import numpy as np
+import seaborn as sns
 
 from create_results_db import get_rig_experiments_df
 from view_dots_worms import get_n_worms_estimate
@@ -30,7 +31,25 @@ if __name__ == '__main__':
     features_files = glob.glob(os.path.join(feats_dir, '**/*_features.hdf5'), recursive=True)
     
     experiments = get_rig_experiments_df(features_files, csv_files)
+    #%%
+    good = experiments['directory'].str.contains('Food_Conc_Exp_050517')
+    experiments_r = experiments[good]
     
+    experiments_r.index = np.arange(len(experiments_r))
+    n_worms_estimate = np.zeros(len(experiments_r))
+    for ii, row in experiments_r.iterrows():
+        print(ii, row['base_name'])
+        skeletons_file = _get_fname(row)
+        with pd.HDFStore(skeletons_file, 'r') as fid:
+            trajectories_data = fid['/trajectories_data']
+        n_worms_estimate[ii] = get_n_worms_estimate(trajectories_data, percentile=50)
+    experiments_r['n_worms_estimate'] = n_worms_estimate
+    data = experiments_r[['Strain', 'Food_Conc','n_worms_estimate']]
+    sns.factorplot(x="Food_Conc", y="n_worms_estimate",
+               col="Strain", data=data, kind="strip", 
+               size=4, aspect=.5, jitter=True);
+    
+    #%%   
     
     all_worms = {}
     for strain, strain_data in experiments.groupby('Strain'):
@@ -52,14 +71,12 @@ if __name__ == '__main__':
                         
                         with pd.HDFStore(skeletons_file, 'r') as fid:
                             trajectories_data = fid['/trajectories_data']
-                        n_worms_estimate = get_n_worms_estimate(trajectories_data)
+                        n_worms_estimate = get_n_worms_estimate(trajectories_data,50)
                         all_worms[field_name][ind_r] = n_worms_estimate
                         
                         print(ii, row['base_name'])
-                        
-#%%
-for key in sorted(all_worms.keys()):
-    print(key, all_worms[key])
-
+    for key in sorted(all_worms.keys()):
+        print(key, all_worms[key])
+    
 
 

@@ -23,14 +23,14 @@ mpl.rcParams['image.cmap'] = 'gray'
 from matplotlib.backends.backend_pdf import PdfPages
 from create_results_db import get_rig_experiments_df
 
-def get_n_worms_estimate(trajectories_data):
+def get_n_worms_estimate(trajectories_data, percentile = 99):
     trajectories_data = trajectories_data[trajectories_data['is_good_skel'] == 1]
     
     
     n_per_frame = trajectories_data['frame_number'].value_counts()
     n_per_frame = n_per_frame.values
     if len(n_per_frame) > 0:
-        n_worms_estimate = np.percentile(n_per_frame, 99)
+        n_worms_estimate = np.percentile(n_per_frame, percentile)
     else:
         n_worms_estimate = 0
     return n_worms_estimate
@@ -184,8 +184,8 @@ if __name__ == '__main__':
     #exp_name = 'Mutant_worm_screening_Y32H12A.7(ok3452)_220217'
     #root_dir = '/Volumes/behavgenom_archive$/Avelino/Worm_Rig_Tests/movies_2h/'
     #root_dir = '/Volumes/behavgenom_archive$/Avelino/Worm_Rig_Tests/short_movies_new/'
-    #root_dir = '/Volumes/behavgenom_archive$/Avelino/screening/CeNDR/'
-    root_dir = '/Volumes/behavgenom_archive$/Adam/screening/antipsychotics'
+    root_dir = '/Volumes/behavgenom_archive$/Avelino/screening/CeNDR/'
+    #root_dir = '/Volumes/behavgenom_archive$/Adam/screening/antipsychotics'
     dname = os.path.join(root_dir, 'MaskedVideos')
     exp_names = [x for x in os.listdir(dname) if os.path.isdir(os.path.join(dname,x))]
     for exp_name in exp_names:

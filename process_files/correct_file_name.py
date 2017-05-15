@@ -322,7 +322,7 @@ def remove_remaining_dirs(raw_movies_root, exp_name):
         if len(existing_files) > 0:
             for x in existing_files:
                 print(x)
-            reply = input('The files above are still in the directory (y/N)?')
+            reply = input('The files above are still in the directory. Would you like to delete it? (y/N)?')
             reply = reply.lower()
             delete_dir =  reply in ['yes', 'ye', 'y']
         else:
@@ -446,11 +446,10 @@ if __name__ == '__main__':
     base_field = 'Strain'
     #output_root = "/Volumes/behavgenom_archive$/Adam/screening/antipsychotics/"
     #output_root = "/Volumes/behavgenom_archive$/Avelino/screening/David_Miller/"
-    #output_root = "/Volumes/behavgenom_archive$/Avelino/screening/CeNDR/"
+    output_root = "/Volumes/behavgenom_archive$/Avelino/screening/CeNDR/"
     #exp_name = 'CeNDR_Set2_280417'
     
-    output_root = '/Volumes/behavgenom_archive$/Adam/screening/antipsychotics'
-    exp_name = 'Antipsychotics_Agar_Screening_120417'
+    exp_name = 'Food_Conc_Exp_050517'
     
-    #rename_raw_videos(raw_movies_root, exp_name, output_root, csv_db_dir)
-    rename_after_bad_choice(output_root, exp_name, base_field)
+    rename_raw_videos(raw_movies_root, exp_name, output_root, csv_db_dir)
+    #rename_after_bad_choice(output_root, exp_name, base_field)
