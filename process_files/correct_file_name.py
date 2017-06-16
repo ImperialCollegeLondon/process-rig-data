@@ -13,45 +13,7 @@ import pandas as pd
 import warnings
 from functools import partial
 
-GECKO_DT_FMT = '%d%m%Y_%H%M%S'
-
-PIX2FOCUS = 10
-def rig_focus_to_microns_per_pixel(focus):
-    ''' convert rig focus to micros per pixel'''
-    return PIX2FOCUS #new calibration #-0.1937*(focus)+13.4377
-
-def read_rig_csv_db(csv_file):
-    if csv_file.endswith('.csv'):
-        db = pd.read_csv(csv_file)
-        db.columns = [x.strip() for x in db.columns]
-        if db.columns.size == 1:
-            db = pd.read_table(csv_file)
-    else:
-        db = pd.read_excel(csv_file)
-    
-    
-    db.dropna(inplace=True, how='all')
-    
-    
-    
-    assert all(x in db for x in ['Set_N', 'Rig_Pos', 'Camera_N'])
-    
-    
-    if 'Focus' in db:
-        db['microns_per_pixel']= db['Focus'].apply(rig_focus_to_microns_per_pixel)
-    else:
-        db['microns_per_pixel'] = PIX2FOCUS
-    
-    
-    db[['Set_N', 'Rig_Pos', 'Camera_N']] = db[['Set_N', 'Rig_Pos', 'Camera_N']].astype(np.int)
-    
-    db_ind = {(row['Set_N'],row['Rig_Pos'],row['Camera_N']) : irow 
-             for irow, row in db.iterrows()}
-          
-    if db.shape[0] == len(db_ind):
-        return db, db_ind
-    else:
-        raise ValueError('There must be only one combination Set_N, Rig_Pos, Camera_N per sample in the .csv file')
+from misc import gecko_fnames_to_table, read_rig_csv_db, GECKO_DT_FMT
 
 def read_rig_log_file(log_files):
     
@@ -88,55 +50,7 @@ def get_rig_pos(movie_time, rig_move_times, max_delta = pd.to_timedelta('5min'))
         
     return stage_pos
     
-def gecko_fnames_to_table(filenames):
-    def _gecko_movie_parts(x):
-        '''
-        Read movie parts as expected from a Gecko file.
-        '''
-        dir_name, bb = os.path.split(x)
-        base_name, ext = os.path.splitext(bb)
-        
-        base_name = base_name.lower()
-        base_name = base_name.replace('set_', 'set')
-        
-        parts = base_name.split('_')
-        
-        if parts[-1].isalpha():
-            postfix = '_' + parts[-1]
-            parts = parts[:-1]
-        else:
-            postfix = ''
-        
-        try:
-            video_timestamp = pd.to_datetime(parts[-2] + '_' + parts[-1], 
-                                   format=GECKO_DT_FMT)
-            parts = parts[:-2]
-        
-        except ValueError:
-            video_timestamp = pd.NaT
-            
-     
-        def _part_n(start_str, parts_d):
-            if parts[-1].startswith(start_str):
-                part_n = int(parts_d[-1].replace(start_str, ''))
-                parts_d = parts_d[:-1]
-            else:
-                part_n = -1
-            return part_n, parts_d
-        
-            
-        channel, parts = _part_n('ch', parts)
-        stage_pos, parts = _part_n('pos', parts)
-        set_n, parts = _part_n('set', parts)
-        
-        
-        prefix = '_'.join(parts)
-        
-        return dir_name, base_name, ext, prefix, channel, stage_pos, set_n, video_timestamp, postfix
-        
-    fparts = [_gecko_movie_parts(x) for x in filenames]
-    fparts_tab = pd.DataFrame(fparts, columns = ('directory', 'base_name', 'ext', 'prefix', 'channel', 'stage_pos', 'set_n', 'video_timestamp', 'postfix'))
-    return fparts_tab
+
 
     
 def get_movie_dirs(movies_dir_D, exp_name):
@@ -195,7 +109,7 @@ def read_extra_data(output_root_d, csv_db_dir):
     else:
         rig_move_times = pd.DataFrame()
         
-        unique_triples = set(tuple(row[col] for col in ['Rig_Pos', 'Camera_N', 'Set_N']) for ii, row in db.iterrows())
+        unique_triples = set(tuple(row[col] for col in ['rig_pos', 'camera_n', 'set_n']) for ii, row in db.iterrows())
         assert len(unique_triples) == len(db)
         
     return rig_move_times, db, db_ind
@@ -213,7 +127,7 @@ def _get_valid_input_files(movie_dir, f_ext=None):
 
 
 
-def get_new_names(fnames, pc_n, db, db_ind, rig_move_times, output_dir='', f_ext=None, base_field='Strain'):
+def get_new_names(fnames, pc_n, db, db_ind, rig_move_times, output_dir='', f_ext=None, base_field='strain'):
     fparts_table = gecko_fnames_to_table(fnames)
     #correct the channel using the pc number
     fparts_table['channel']  += pc_n*2
@@ -224,11 +138,11 @@ def get_new_names(fnames, pc_n, db, db_ind, rig_move_times, output_dir='', f_ext
     else:
         for ii, row in fparts_table.iterrows():
             
-            good = (db['Camera_N'] == row['channel']) & (db['Set_N'] == row['set_n'])
+            good = (db['camera_n'] == row['channel']) & (db['set_n'] == row['set_n'])
             ind = np.where(good)[0]
             
             if ind.size==1:
-                fparts_table.loc[ii, 'stage_pos'] = db.loc[ind[0], 'Rig_Pos']
+                fparts_table.loc[ii, 'stage_pos'] = db.loc[ind[0], 'rig_pos']
             #else: print('Cannot find a match for the file {} in the database.'.format(row['base_name']))
                 
     #%%
@@ -268,19 +182,19 @@ def get_new_names(fnames, pc_n, db, db_ind, rig_move_times, output_dir='', f_ext
 
 
     
-def new_prefix_fun(db_row, base_field='Strain'):
-    base_name = '{}_worms{}'.format(db_row['Strain'], db_row['N_Worms'])
-    if 'Vortex' in db_row:
-        if db_row['Vortex'] == 1:
+def new_prefix_fun(db_row, base_field='strain'):
+    base_name = '{}_worms{}'.format(db_row['strain'], db_row['n_worms'])
+    if 'vortex' in db_row:
+        if db_row['vortex'] == 1:
             base_name += '_V'
         base_name
     
     
-    if 'Compound' in db_row:
-        base_name += '_{}_{:.2f}'.format(db_row['Compound'],db_row['Concentration']).rstrip('0').rstrip('.')
-    elif 'Food_Conc' in db_row:
-        if db_row['Food_Conc'] > 0:
-            base_name += '_food1-{}'.format(db_row['Food_Conc'])
+    if 'compound' in db_row:
+        base_name += '_{}_{:.2f}'.format(db_row['compound'],db_row['concentration']).rstrip('0').rstrip('.')
+    elif 'food_conc' in db_row:
+        if db_row['food_conc'] > 0:
+            base_name += '_food1-{}'.format(db_row['food_conc'])
         else:
             base_name += '_nofood'
     
@@ -334,7 +248,7 @@ def remove_remaining_dirs(raw_movies_root, exp_name):
 
 
 #%% 
-def get_new_names_pc(original_root, exp_name, output_root, csv_db_dir, base_field='Strain'):
+def get_new_names_pc(original_root, exp_name, output_root, csv_db_dir, base_field='strain'):
     #get data from the extra files and copy them int othe ExtraFiles directory if necessary
     rig_move_times, db, db_ind = read_extra_data(output_root, csv_db_dir)
     
@@ -399,7 +313,7 @@ def rename_files(files_to_rename, save_renamed_files):
             print('Aborted.')
 
 
-def rename_raw_videos(raw_movies_root, exp_name, output_root, csv_db_dir, base_field='Strain'):
+def rename_raw_videos(raw_movies_root, exp_name, output_root, csv_db_dir, base_field='strain'):
     files_to_rename = get_new_names_pc(raw_movies_root, 
                                        exp_name, 
                                        output_root,
@@ -410,7 +324,7 @@ def rename_raw_videos(raw_movies_root, exp_name, output_root, csv_db_dir, base_f
     rename_files(files_to_rename, save_renamed_files)
     remove_remaining_dirs(raw_movies_root, exp_name)
 
-def rename_after_bad_choice(output_root, exp_name, base_field='Strain'):
+def rename_after_bad_choice(output_root, exp_name, base_field='strain'):
     fnames = []
     raw_dir = os.path.join(output_root, 'RawVideos',  exp_name)
     if os.path.exists(raw_dir): 
@@ -443,13 +357,13 @@ def rename_after_bad_choice(output_root, exp_name, base_field='Strain'):
 if __name__ == '__main__':
     raw_movies_root = "/Volumes/behavgenom_archive$/RigRawVideos"
     csv_db_dir = "/Volumes/behavgenom_archive$/ScreeningExcelPrintout"
-    base_field = 'Strain'
+    base_field = 'strain'
     #output_root = "/Volumes/behavgenom_archive$/Adam/screening/antipsychotics/"
     #output_root = "/Volumes/behavgenom_archive$/Avelino/screening/David_Miller/"
     output_root = "/Volumes/behavgenom_archive$/Avelino/screening/CeNDR/"
     #exp_name = 'CeNDR_Set2_280417'
     
-    exp_name = 'Food_Conc_Exp_050517'
+    exp_name = 'CeNDR_Set1_020617'
     
     rename_raw_videos(raw_movies_root, exp_name, output_root, csv_db_dir)
     #rename_after_bad_choice(output_root, exp_name, base_field)

@@ -21,20 +21,16 @@ mpl.rcParams['image.interpolation'] = 'none'
 mpl.rcParams['image.cmap'] = 'gray'
 
 from matplotlib.backends.backend_pdf import PdfPages
-from create_results_db import get_rig_experiments_df
+from misc import get_rig_experiments_df
 
-def get_n_worms_estimate(trajectories_data, percentile = 99):
-    trajectories_data = trajectories_data[trajectories_data['is_good_skel'] == 1]
-    
-    
-    n_per_frame = trajectories_data['frame_number'].value_counts()
+def get_n_worms_estimate(frame_numbers, percentile = 99):
+    n_per_frame = frame_numbers.value_counts()
     n_per_frame = n_per_frame.values
     if len(n_per_frame) > 0:
         n_worms_estimate = np.percentile(n_per_frame, percentile)
     else:
         n_worms_estimate = 0
     return n_worms_estimate
-
 
 def plot_img_ch(exp_row, frame_number=0):
     mask_dir = exp_row['directory']
@@ -51,7 +47,7 @@ def plot_img_ch(exp_row, frame_number=0):
     
     
     trajectories_data = trajectories_data[trajectories_data['is_good_skel'] == 1]
-    n_worms_estimate = get_n_worms_estimate(trajectories_data)
+    n_worms_estimate = get_n_worms_estimate(trajectories_data['frame_number'])
     
     ch2sp = {1:1, 2:4, 3:2, 4:5, 5:3, 6:6}
     coord = trajectories_data[trajectories_data['frame_number']==frame_number]    
@@ -71,10 +67,10 @@ def plot_img_ch(exp_row, frame_number=0):
             color='black', fontsize=8,
             bbox={'facecolor':'yellow', 'alpha':0.5, 'pad':1})
     
-    ax.text(0, 2000, exp_row['N_Worms'], color='white', fontsize=10,
+    ax.text(0, 2000, exp_row['n_worms'], color='white', fontsize=10,
             bbox={'facecolor':'green', 'alpha':0.5, 'pad':1})
     
-    col = 'green' if exp_row['N_Worms'] == n_worms_estimate else 'red'
+    col = 'green' if exp_row['n_worms'] == n_worms_estimate else 'red'
     ax.text(1850, 2000, n_worms_estimate, color='white', fontsize=10,
             bbox={'facecolor':col, 'alpha':0.5, 'pad':1})
     
@@ -148,11 +144,11 @@ def make_plate_views(root_dir, exp_name, max_del_t = 2):
                 print(exp_name, title_str)
     
     #plot correlation plots
-    dd = exp_data[['n_worms_estimate', 'N_Worms']].dropna()
-    bot = min(dd['n_worms_estimate'].min(), dd['N_Worms'].min())-1
-    top = min(dd['n_worms_estimate'].max(), dd['N_Worms'].max())+1
+    dd = exp_data[['n_worms_estimate', 'n_worms']].dropna()
+    bot = min(dd['n_worms_estimate'].min(), dd['n_worms'].min())-1
+    top = min(dd['n_worms_estimate'].max(), dd['n_worms'].max())+1
     
-    obj = sns.lmplot('N_Worms', 
+    obj = sns.lmplot('n_worms', 
                 'n_worms_estimate',
                 hue='set_n',
                 data=exp_data,
@@ -167,7 +163,7 @@ def make_plate_views(root_dir, exp_name, max_del_t = 2):
     figs2save = [obj.fig] + figs2save
     
     
-    pdf_dir = os.path.join(root_dir, 'Plate_Views')
+    pdf_dir = os.path.join(root_dir, 'PlateViews')
     if not os.path.exists(pdf_dir):
         os.makedirs(pdf_dir)
     save_name =  os.path.join(pdf_dir, exp_name + '_plate_view.pdf')
