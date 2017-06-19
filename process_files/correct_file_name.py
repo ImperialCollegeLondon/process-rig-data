@@ -128,53 +128,74 @@ def _get_valid_input_files(movie_dir, f_ext=None):
 
 
 def get_new_names(fnames, pc_n, db, db_ind, rig_move_times, output_dir='', f_ext=None, base_field='strain'):
-    fparts_table = gecko_fnames_to_table(fnames)
-    #correct the channel using the pc number
-    fparts_table['channel']  += pc_n*2
+    def _row2basename(row, new_prefix=None):
+        if new_prefix is None:
+            new_prefix = row['prefix']
+        
     
-    #get rig pos from log time
-    if rig_move_times.size > 0:
-        fparts_table['stage_pos'] = fparts_table['video_timestamp'].apply(partial(get_rig_pos, rig_move_times=rig_move_times))
-    else:
-        for ii, row in fparts_table.iterrows():
-            
-            good = (db['camera_n'] == row['channel']) & (db['set_n'] == row['set_n'])
-            ind = np.where(good)[0]
-            
-            if ind.size==1:
-                fparts_table.loc[ii, 'stage_pos'] = db.loc[ind[0], 'rig_pos']
-            #else: print('Cannot find a match for the file {} in the database.'.format(row['base_name']))
-                
-    #%%
-    dir_files_to_rename = []
-    for old_fname, (irow, row) in zip(fnames, fparts_table.iterrows()):
-        try:
-            #match movie using set_n, pos_n, ch_n
-            db_row = db.loc[db_ind[(row['set_n'], row['stage_pos'], row['channel'])]]
-        except KeyError:
-            #not match in the csv database
-            print('FILE NOT LOCATED IN THE DATABASE: ' +  old_fname)
-            continue
-            
-        new_prefix = new_prefix_fun(db_row, base_field)
-
         new_base = '{}_Set{}_Pos{}_Ch{}_{}{}{}'.format(new_prefix,
-                                               int(row['set_n']), 
-                                               int(row['stage_pos']), 
-                                               int(row['channel']),
+                                               max(0, int(row['set_n'])), 
+                                               max(0, int(row['stage_pos'])), 
+                                               max(0, int(row['channel'])),
                                                row['video_timestamp'].strftime(GECKO_DT_FMT),
                                                row['postfix'], 
                                                row['ext'])
-
+        return new_base
+    
+    def _build_fname(new_base, old_fname):
         if output_dir:
             new_fname = os.path.join(output_dir, new_base)
         else:
             dname = os.path.dirname(old_fname)
             new_fname = os.path.join(dname, new_base)
+        
+        return new_fname
+
+    
+    
+    fparts_table = gecko_fnames_to_table(fnames)
+    #correct the channel using the pc number
+    fparts_table['channel']  += pc_n*2
+    
+    dir_files_to_rename = []
+    if any(x is None for x in (db, db_ind, rig_move_times)):
+        for old_fname, (irow, row) in zip(fnames, fparts_table.iterrows()):    
+            new_base = _row2basename(row)
+            new_fname = _build_fname(new_base, old_fname)
+            dir_files_to_rename.append((old_fname, new_fname))
+        
+    else:
+        #correct data if necessary
+        #get rig pos from log time
+        if rig_move_times.size > 0:
+            fparts_table['stage_pos'] = fparts_table['video_timestamp'].apply(partial(get_rig_pos, rig_move_times=rig_move_times))
+        else:
+            for ii, row in fparts_table.iterrows():
                 
+                good = (db['camera_n'] == row['channel']) & (db['set_n'] == row['set_n'])
+                ind = np.where(good)[0]
+                
+                if ind.size==1:
+                    fparts_table.loc[ii, 'stage_pos'] = db.loc[ind[0], 'rig_pos']
+                #else: print('Cannot find a match for the file {} in the database.'.format(row['base_name']))
+                    
+        
+        for old_fname, (irow, row) in zip(fnames, fparts_table.iterrows()):
+            try:
+                #match movie using set_n, pos_n, ch_n
+                db_row = db.loc[db_ind[(row['set_n'], row['stage_pos'], row['channel'])]]
+            except KeyError:
+                #not match in the csv database
+                print('FILE NOT LOCATED IN THE DATABASE: ' +  old_fname)
+                continue
             
-        #print(os.path.split(old_fname), os.path.split(new_fname))
-        dir_files_to_rename.append((old_fname, new_fname))
+            new_prefix = new_prefix_fun(db_row, base_field)
+            new_base = _row2basename(row, new_prefix)
+            new_fname = _build_fname(new_base, old_fname)
+            
+            #print(os.path.split(old_fname), os.path.split(new_fname))
+            dir_files_to_rename.append((old_fname, new_fname))
+    
     return dir_files_to_rename
 
             
@@ -249,16 +270,24 @@ def remove_remaining_dirs(raw_movies_root, exp_name):
 
 #%% 
 def get_new_names_pc(original_root, exp_name, output_root, csv_db_dir, base_field='strain'):
-    #get data from the extra files and copy them int othe ExtraFiles directory if necessary
-    rig_move_times, db, db_ind = read_extra_data(output_root, csv_db_dir)
-    
     #get de directories for a particular experiment
     movie_dirs = get_movie_dirs(original_root, exp_name)    
     if len(movie_dirs)==0:
         print('No valid directories with the format {}\**\{} were found. Nothing to do here.'.format(original_root, exp_name))
         return
     
-    
+    try:
+        #get data from the extra files and copy them int othe ExtraFiles directory if necessary
+        rig_move_times, db, db_ind = read_extra_data(output_root, csv_db_dir)
+        
+        
+    except FileNotFoundError:
+        reply = input('No valid csv/xlsx file was found in {}. Do you wish to continue?'.format(csv_db_dir))
+        reply = reply.lower()
+        if not reply in ['yes', 'ye', 'y']:
+            return
+        else:
+            rig_move_times, db, db_ind = None, None, None
     
     #create output directory where the files are going to be moved
     output_dir = os.path.join(output_root, 'RawVideos',  exp_name)
@@ -363,7 +392,7 @@ if __name__ == '__main__':
     output_root = "/Volumes/behavgenom_archive$/Avelino/screening/CeNDR/"
     #exp_name = 'CeNDR_Set2_280417'
     
-    exp_name = 'CeNDR_Set1_020617'
+    exp_name = 'Development_C3_180617'
     
     rename_raw_videos(raw_movies_root, exp_name, output_root, csv_db_dir)
     #rename_after_bad_choice(output_root, exp_name, base_field)
