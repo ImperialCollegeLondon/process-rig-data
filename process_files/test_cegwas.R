@@ -1,5 +1,5 @@
 library(cegwas)
-
+library(tidyverse)
 fname = '/Users/ajaver/Documents/GitHub/process-rig-data/process_files/CeNDR_all_avg.csv'
 df = read.csv(fname, row.names = 1)
 pheno = data.frame(t(df))

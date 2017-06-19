@@ -357,13 +357,13 @@ def rename_after_bad_choice(output_root, exp_name, base_field='strain'):
 if __name__ == '__main__':
     raw_movies_root = "/Volumes/behavgenom_archive$/RigRawVideos"
     csv_db_dir = "/Volumes/behavgenom_archive$/ScreeningExcelPrintout"
-    base_field = 'strain'
     #output_root = "/Volumes/behavgenom_archive$/Adam/screening/antipsychotics/"
     #output_root = "/Volumes/behavgenom_archive$/Avelino/screening/David_Miller/"
-    output_root = "/Volumes/behavgenom_archive$/Avelino/screening/CeNDR/"
+    #output_root = "/Volumes/behavgenom_archive$/Avelino/screening/CeNDR/"
+    output_root = "/Volumes/behavgenom_archive$/Adam/screening/antipsychotics"
     #exp_name = 'CeNDR_Set2_280417'
     
-    exp_name = 'CeNDR_Set1_020617'
+    exp_name = 'Antipsychotics_Agar_Screening_090617'
     
     rename_raw_videos(raw_movies_root, exp_name, output_root, csv_db_dir)
     #rename_after_bad_choice(output_root, exp_name, base_field)
