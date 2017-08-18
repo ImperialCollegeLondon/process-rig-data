@@ -15,6 +15,8 @@ from functools import partial
 
 from misc import gecko_fnames_to_table, read_rig_csv_db, GECKO_DT_FMT
 
+VALID_EXT = ['mjpg', 'hdf5']
+
 def read_rig_log_file(log_files):
     
     def _log_parts(x):
@@ -114,20 +116,15 @@ def read_extra_data(output_root_d, csv_db_dir):
         
     return rig_move_times, db, db_ind
 
-def _get_valid_input_files(movie_dir, f_ext=None):
-    if f_ext is None:
-        fnames1 = glob.glob(os.path.join(movie_dir, '**', '*.mjpg'), recursive=True)
-        fnames2 = glob.glob(os.path.join(movie_dir, '**', '*hdf5'), recursive=True)
-        fnames = fnames1 + fnames2
-    else:
-        fnames = glob.glob(os.path.join(movie_dir, '**', f_ext), recursive=True)
-    
+def _get_valid_input_files(movie_dir, f_ext=VALID_EXT):
+    fnames = glob.glob(os.path.join(movie_dir, '**', '*.*'), recursive=True)
+    fnames = [x for x in fnames if any(x.endswith(e) for e in f_ext)]
     return fnames
 
 
 
 
-def get_new_names(fnames, pc_n, db, db_ind, rig_move_times, output_dir='', f_ext=None, base_field='strain'):
+def get_new_names(fnames, pc_n, db, db_ind, rig_move_times, output_dir='', f_ext=VALID_EXT, base_field='strain'):
     def _row2basename(row, new_prefix=None):
         if new_prefix is None:
             new_prefix = row['prefix']
@@ -376,7 +373,7 @@ def rename_after_bad_choice(output_root, exp_name, base_field='strain'):
                                     db_ind, 
                                     rig_move_times, 
                                     output_dir='', 
-                                    f_ext=None,
+                                    f_ext=VALID_EXT,
                                     base_field=base_field)
     files_to_rename = [(x,y) for x,y in files_to_rename if x!=y]
     
@@ -386,12 +383,12 @@ def rename_after_bad_choice(output_root, exp_name, base_field='strain'):
 if __name__ == '__main__':
     raw_movies_root = "/Volumes/behavgenom_archive$/RigRawVideos"
     csv_db_dir = "/Volumes/behavgenom_archive$/ScreeningExcelPrintout"
-    output_root = "/Volumes/behavgenom_archive$/Avelino/screening/CeNDR"
-    #output_root = "/Volumes/behavgenom_archive$/Solveig/Experiment3/"
-    #output_root = "/Volumes/behavgenom_archive$/Adam/screening/antipsychotics"
-    #exp_name = 'CeNDR_Set2_280417'
+    #output_root = "/Volumes/behavgenom_archive$/Avelino/screening/CeNDR"
+    output_root = "/Volumes/behavgenom_archive$/Solveig/Experiment7/"
+    #output_root = "/Volumes/behavgenom_archive$/Adam/screening/Syngenta"
+    exp_name = '170817_matdeve_exp7co1'
     
-    exp_name = 'CeNDR_Set3_030817'
+    #exp_name = '170815_matdeve_exp6co3'
     
     rename_raw_videos(raw_movies_root, exp_name, output_root, csv_db_dir)
     #rename_after_bad_choice(output_root, exp_name, base_field)

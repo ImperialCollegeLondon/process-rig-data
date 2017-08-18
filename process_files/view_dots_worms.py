@@ -14,6 +14,8 @@ import pandas as pd
 import tables
 import glob
 
+from scipy.misc import imresize
+
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 plt.style.use('seaborn-deep')
@@ -32,7 +34,7 @@ def get_n_worms_estimate(frame_numbers, percentile = 99):
         n_worms_estimate = 0
     return n_worms_estimate
 
-def plot_img_ch(exp_row, frame_number=0):
+def plot_img_ch(exp_row, frame_number=0, resize_factor = 0.25):
     mask_dir = exp_row['directory']
     results_dir = mask_dir.replace('MaskedVideos', 'Results')
     mask_file = os.path.join(mask_dir, exp_row['base_name'] + exp_row['ext'])
@@ -41,6 +43,15 @@ def plot_img_ch(exp_row, frame_number=0):
     with tables.File(mask_file, 'r') as fid:
         img = fid.get_node('/full_data')[0]
         tot_frames =  fid.get_node('/mask').shape[0]
+        
+        if resize_factor != 1:
+            img = imresize(img, resize_factor)
+        
+    with tables.File(skeletons_file, 'r') as fid:
+        if '/food_cnt_coord' in fid:
+            food_cnt = fid.get_node('/food_cnt_coord')[:]*resize_factor
+        else:
+            food_cnt = None
     
     with pd.HDFStore(skeletons_file, 'r') as fid:
         trajectories_data = fid['/trajectories_data']
@@ -51,34 +62,35 @@ def plot_img_ch(exp_row, frame_number=0):
     
     ch2sp = {1:1, 2:4, 3:2, 4:5, 5:3, 6:6}
     coord = trajectories_data[trajectories_data['frame_number']==frame_number]    
-    xx = coord['coord_x'].values
-    yy = coord['coord_y'].values
+    xx = coord['coord_x'].values*resize_factor
+    yy = coord['coord_y'].values*resize_factor
     
     ch_n = exp_row['channel']
     
     ax = plt.subplot(2,3, ch2sp[ch_n], aspect='equal');
     plt.imshow(img);
+    if food_cnt is not None:
+        plt.plot(food_cnt[:, 0], food_cnt[:, 1], 'g', linewidth=1)
+    
     plt.scatter(xx, yy, s=80, facecolors='none', edgecolors='r')
     plt.axis('off');
     
-    ax.text(0, 100, 'Ch%i' % ch_n, color='black', fontsize=8,
+    ax.text(0, 100*resize_factor, 'Ch%i' % ch_n, color='black', fontsize=8,
             bbox={'facecolor':'yellow', 'alpha':0.5, 'pad':1})
-    ax.text(512, 100, 'Frames: {}'.format(tot_frames), 
+    ax.text(512*resize_factor, 100*resize_factor, 'Frames: {}'.format(tot_frames), 
             color='black', fontsize=8,
             bbox={'facecolor':'yellow', 'alpha':0.5, 'pad':1})
     
-    ax.text(0, 2000, exp_row['n_worms'], color='white', fontsize=10,
+    ax.text(0, 2000*resize_factor, exp_row['n_worms'], color='white', fontsize=10,
             bbox={'facecolor':'green', 'alpha':0.5, 'pad':1})
     
     col = 'green' if exp_row['n_worms'] == n_worms_estimate else 'red'
-    ax.text(1850, 2000, n_worms_estimate, color='white', fontsize=10,
+    ax.text(1850*resize_factor, 2000*resize_factor, n_worms_estimate, color='white', fontsize=10,
             bbox={'facecolor':col, 'alpha':0.5, 'pad':1})
     
-    if exp_row['Mark'] == 1:
-        ax.text(1850, 100, 'XX', color='black', fontsize=8,
+    if exp_row['mark'] == 1:
+        ax.text(1850*resize_factor, 100*resize_factor, 'XX', color='black', fontsize=8,
             bbox={'facecolor':'blue', 'alpha':1, 'pad':1})
-    
-    
     
     return n_worms_estimate
 
@@ -142,7 +154,7 @@ def make_plate_views(root_dir, exp_name, max_del_t = 2):
                 figs2save.append(fig)
                 
                 print(exp_name, title_str)
-    
+                
     #plot correlation plots
     dd = exp_data[['n_worms_estimate', 'n_worms']].dropna()
     bot = min(dd['n_worms_estimate'].min(), dd['n_worms'].min())-1
@@ -161,7 +173,6 @@ def make_plate_views(root_dir, exp_name, max_del_t = 2):
     plt.ylim((bot,top))
     
     figs2save = [obj.fig] + figs2save
-    
     
     pdf_dir = os.path.join(root_dir, 'PlateViews')
     if not os.path.exists(pdf_dir):
@@ -186,4 +197,5 @@ if __name__ == '__main__':
     exp_names = [x for x in os.listdir(dname) if os.path.isdir(os.path.join(dname,x))]
     for exp_name in exp_names:
         make_plate_views(root_dir, exp_name, max_del_t=2)
+        
     
