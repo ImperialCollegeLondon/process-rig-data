@@ -42,7 +42,7 @@ def get_df_quantiles(input_d):
     return (iexp, feat_mean_s)
 
 
-strain_list = pd.read_csv('strains_list.csv')
+strain_list = pd.read_csv('CeNDR_strains_list.csv')
 if __name__ == '__main__':
     
     

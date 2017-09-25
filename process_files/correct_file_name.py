@@ -243,26 +243,26 @@ def remove_remaining_dirs(raw_movies_root, exp_name):
         return existing_files
     
     
-    valid_files = sum(map(_get_valid_input_files, get_movie_dirs(raw_movies_root, exp_name)), [])
-    
-    if len(valid_files) > 0:
-        for x in valid_files:
+#    valid_files = sum(map(_get_valid_input_files, get_movie_dirs(raw_movies_root, exp_name)), [])
+#    
+#    if len(valid_files) > 0:
+#        for x in valid_files:
+#            print(x)
+#        print('The files above still valid movies in the directories {}/**/{}.'.format(raw_movies_root, exp_name))
+#    else:
+    existing_files = _get_all_files(raw_movies_root, exp_name)
+    if len(existing_files) > 0:
+        for x in existing_files:
             print(x)
-        print('The files above still valid movies in the directories {}/**/{}.'.format(raw_movies_root, exp_name))
+        reply = input('The files above are still in the directory. Would you like to delete it? (y/N)?')
+        reply = reply.lower()
+        delete_dir =  reply in ['yes', 'ye', 'y']
     else:
-        existing_files = _get_all_files(raw_movies_root, exp_name)
-        if len(existing_files) > 0:
-            for x in existing_files:
-                print(x)
-            reply = input('The files above are still in the directory. Would you like to delete it? (y/N)?')
-            reply = reply.lower()
-            delete_dir =  reply in ['yes', 'ye', 'y']
-        else:
-            delete_dir = True
-        
-        if delete_dir:
-            for movie_dir in get_movie_dirs(raw_movies_root, exp_name):
-                shutil.rmtree(movie_dir)
+        delete_dir = True
+    
+    if delete_dir:
+        for movie_dir in get_movie_dirs(raw_movies_root, exp_name):
+            shutil.rmtree(movie_dir)
 
 
 #%% 
@@ -362,6 +362,7 @@ def rename_after_bad_choice(output_root, exp_name, base_field='strain'):
             fnames += glob.glob(os.path.join(dname, '**', '*.hdf5'), recursive=True)
             fnames += glob.glob(os.path.join(dname, '**', '*.avi'), recursive=True)
             fnames += glob.glob(os.path.join(dname, '**', '*.wcon*'), recursive=True)
+            fnames += glob.glob(os.path.join(dname, '**', '*_eggs.csv'), recursive=True)
     
     #get data from the extra files
     rig_move_times, db, db_ind = read_extra_data(output_root, '')
@@ -383,12 +384,14 @@ def rename_after_bad_choice(output_root, exp_name, base_field='strain'):
 if __name__ == '__main__':
     raw_movies_root = "/Volumes/behavgenom_archive$/RigRawVideos"
     csv_db_dir = "/Volumes/behavgenom_archive$/ScreeningExcelPrintout"
-    #output_root = "/Volumes/behavgenom_archive$/Avelino/screening/CeNDR"
-    output_root = "/Volumes/behavgenom_archive$/Solveig/Experiment7/"
-    #output_root = "/Volumes/behavgenom_archive$/Adam/screening/Syngenta"
-    exp_name = '170817_matdeve_exp7co1'
     
-    #exp_name = '170815_matdeve_exp6co3'
+    output_root = "/Volumes/behavgenom_archive$/Ida/test/"
+    #output_root = "/Volumes/behavgenom_archive$/Avelino/screening/CeNDR"
+    #output_root = "/Volumes/behavgenom_archive$/Solveig/Experiment8/"
+    #output_root = "/Volumes/behavgenom_archive$/Adam/screening/Syngenta"
+    #output_root = '/Volumes/behavgenom_archive$/Mehdi/Drug Screening'
+    #output_root = "/Volumes/behavgenom_archive$/Avelino/Swiss_Strains"
+    exp_name = '190917_Ida'
     
     rename_raw_videos(raw_movies_root, exp_name, output_root, csv_db_dir)
-    #rename_after_bad_choice(output_root, exp_name, base_field)
+    #rename_after_bad_choice(output_root, exp_name)
