@@ -14,18 +14,18 @@ from functools import partial
 
 from sklearn.manifold import TSNE
 from sklearn.decomposition import PCA, SparsePCA, FastICA
-
 from matplotlib.backends.backend_pdf import PdfPages
 import statsmodels.stats.multitest as smm
 from scipy.stats import ttest_ind
 import seaborn as sns
-from misc import get_rig_experiments_df
 import matplotlib.pylab as plt
 from scipy.stats import f_oneway
 
+from misc import get_rig_experiments_df
+
 index_cols = ['worm_index', 'timestamp', 'skeleton_id', 'motion_modes', 'strain']
 
-def get_df_quantiles(input_d, f_ext):
+def get_df_quantiles(input_d, f_ext, is_normalized = True):
     iexp, row = input_d
     print(iexp+1, row['base_name'])
     #%%
@@ -45,9 +45,43 @@ def get_df_quantiles(input_d, f_ext):
             
             speed_cols = ['head_tip_speed', 'head_speed', 'midbody_speed', 'tail_speed', 'tail_tip_speed']
             features_timeseries = fid['/features_timeseries']
+    
+    
+    if is_normalized:
+        
+        median_length = features_timeseries.groupby('worm_index').agg({'length':'median'})
+        median_length_vec = features_timeseries['worm_index'].map(median_length['length'])
+        
+        feats2norm = [
+               'speed',
+               'relative_speed_midbody', 
+               'relative_radial_velocity_head_tip',
+               'relative_radial_velocity_neck',
+               'relative_radial_velocity_hips',
+               'relative_radial_velocity_tail_tip',
+               'head_tail_distance',
+               'major_axis', 
+               'minor_axis', 
+               'dist_from_food_edge'
+               ]
+    
+        for f in feats2norm:
+            features_timeseries[f] /= median_length_vec
+        
+        curv_feats = ['curvature_head',
+                       'curvature_hips', 
+                       'curvature_midbody', 
+                       'curvature_neck',
+                       'curvature_tail']
         
         
-    #%%
+        for f in curv_feats:
+            features_timeseries[f] *= median_length_vec
+        
+        #dd = {x : x + '_N' for x in feats2norm + curv_feats}
+        #features_timeseries.rename(columns = dd, inplace=True)
+        
+    
     dd = index_cols + speed_cols
     valid_feats = [x for x in features_timeseries.columns if not x in dd]
    
@@ -69,13 +103,13 @@ def get_df_quantiles(input_d, f_ext):
 
 
 if __name__ == '__main__':
-    exp_set_dir = '/Volumes/behavgenom_archive$/Avelino/screening/Swiss_Strains'
-    
+    #exp_set_dir = '/Volumes/behavgenom_archive$/Avelino/screening/Swiss_Strains'
+    exp_set_dir = '/Users/ajaver/OneDrive - Imperial College London/swiss_strains'
     csv_dir = os.path.join(exp_set_dir, 'ExtraFiles')
     feats_dir = os.path.join(exp_set_dir, 'Results')
     
     timeseries_feats = []
-    for set_type in ['featuresN', 'features']:
+    for set_type in ['featuresN']:#, 'features']:
         save_dir = './results_{}'.format(set_type)
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
@@ -319,7 +353,6 @@ if __name__ == '__main__':
                    hue = 'strain',
                    hue_order = strain_order,
                    palette = col_dict,
-                   #palette = dd,
                    size= 8,
                    scatter_kws={"s": 100},
                    legend=False,
