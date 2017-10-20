@@ -385,13 +385,13 @@ if __name__ == '__main__':
     raw_movies_root = "/Volumes/behavgenom_archive$/RigRawVideos"
     csv_db_dir = "/Volumes/behavgenom_archive$/ScreeningExcelPrintout"
     
-    #output_root = "/Volumes/behavgenom_archive$/Ida/test/"
-    output_root = "/Volumes/behavgenom_archive$/Avelino/screening/CeNDR"
+    output_root = "/Volumes/behavgenom_archive$/Ida/test_2/"
+    #output_root = "/Volumes/behavgenom_archive$/Avelino/screening/CeNDR"
     #output_root = "/Volumes/behavgenom_archive$/Solveig/Experiment8/"
     #output_root = "/Volumes/behavgenom_archive$/Adam/screening/Syngenta"
     #output_root = '/Volumes/behavgenom_archive$/Mehdi/Drug Screening'
     #output_root = "/Volumes/behavgenom_archive$/Avelino/Swiss_Strains"
-    exp_name = 'CeNDR_Set4_041017'
+    exp_name = 'Ida2'
     
     rename_raw_videos(raw_movies_root, exp_name, output_root, csv_db_dir)
     #rename_after_bad_choice(output_root, exp_name)
