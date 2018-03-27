@@ -17,7 +17,7 @@ def read_rig_csv_db(csv_file):
     
     
     db.dropna(inplace=True, how='all')
-    db.columns = [x.lower() for x in db.columns]
+    db.columns = [x.lower() if isinstance(x, str) else x for x in db.columns]
     
     assert all(x in db for x in ['set_n', 'rig_pos', 'camera_n'])
     

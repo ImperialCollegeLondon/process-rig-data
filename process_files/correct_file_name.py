@@ -105,6 +105,7 @@ def read_extra_data(output_root_d, csv_db_dir):
     
     
     #read aux files
+    print(csv_file)
     db, db_ind = read_rig_csv_db(csv_file)
     if log_files:
         rig_move_times = read_rig_log_file(log_files)
@@ -307,7 +308,13 @@ def get_new_names_pc(original_root, exp_name, output_root, csv_db_dir, base_fiel
                         output_dir = output_dir,
                         base_field=base_field)
     
-    files_to_rename = [get_new_d(_get_valid_input_files(movie_dir), pc_n) for pc_n, movie_dir in enumerate(movie_dirs)]
+    def get_pc_n(x):
+        #read the PC number from the directory name
+        dat = [d for d in x.split(os.sep) if len(d) == 3 and d.startswith('PC')]
+        assert len(dat) == 1
+        return int(dat[0][2:])-1
+        
+    files_to_rename = [get_new_d(_get_valid_input_files(movie_dir), get_pc_n(movie_dir)) for movie_dir in movie_dirs]
     #flatten list
     files_to_rename = sum(files_to_rename, [])
     files_to_rename = [(x, y.replace('.hdf5', '.raw_hdf5')) for x,y in files_to_rename]
@@ -361,14 +368,15 @@ def rename_after_bad_choice(output_root, exp_name, base_field='strain'):
     
     for dtype in ['Results', 'MaskedVideos']:
         dname = os.path.join(output_root, dtype,  exp_name)
-        if os.path.exists(raw_dir): 
+        print(dname)
+        if os.path.exists(dname): 
             fnames += glob.glob(os.path.join(dname, '**', '*.hdf5'), recursive=True)
             fnames += glob.glob(os.path.join(dname, '**', '*.avi'), recursive=True)
             fnames += glob.glob(os.path.join(dname, '**', '*.wcon*'), recursive=True)
             fnames += glob.glob(os.path.join(dname, '**', '*_eggs.csv'), recursive=True)
     
     #get data from the extra files
-    rig_move_times, db, db_ind = read_extra_data(output_root, '')
+    rig_move_times, db, db_ind = read_extra_data(output_root, csv_db_dir)
     
     #explore each directory and get the expected new name
     files_to_rename = get_new_names(fnames, 
@@ -383,19 +391,24 @@ def rename_after_bad_choice(output_root, exp_name, base_field='strain'):
     
     save_renamed_files = os.path.join(output_root, 'ExtraFiles', exp_name + '_corrected.tsv')
     rename_files(files_to_rename, save_renamed_files)
-
+    
+    
+#%%
 if __name__ == '__main__':
     raw_movies_root = "/Volumes/behavgenom_archive$/RigRawVideos"
     csv_db_dir = "/Volumes/behavgenom_archive$/ScreeningExcelPrintout"
     
-    output_root = "/Volumes/behavgenom_archive$/Avelino/screening/Nell"
-    #output_root = "/Volumes/behavgenom_archive$/Ida/test_2/"
+    #output_root = "/Volumes/behavgenom_archive$/Avelino/screening/MMP"
     #output_root = "/Volumes/behavgenom_archive$/Avelino/screening/CeNDR"
-    #output_root = "/Volumes/behavgenom_archive$/Solveig/Experiment8/"
-    #output_root = "/Volumes/behavgenom_archive$/Adam/screening/Syngenta"
-    #output_root = '/Volumes/behavgenom_archive$/Mehdi/Drug Screening'
     #output_root = "/Volumes/behavgenom_archive$/Avelino/Swiss_Strains"
-    exp_name = '171020_dementia_lipids'
-    
-    rename_raw_videos(raw_movies_root, exp_name, output_root, csv_db_dir)
+    output_root = '/Volumes/behavgenom_archive$/Serena/AggregationScreening'
+    #exp_name =  'MMP_Set2_121217'
+    #rename_raw_videos(raw_movies_root, exp_name, output_root, csv_db_dir)
     #rename_after_bad_choice(output_root, exp_name)
+
+    exp_names = ['MK_Olazapine_220817']
+    
+    for exp_name in exp_names:
+        rename_raw_videos(raw_movies_root, exp_name, output_root, csv_db_dir)
+        #rename_after_bad_choice(output_root, exp_name, csv_db_dir)
+    
